@@ -4,6 +4,8 @@ import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline'
 import FlyoutMenu from "./FlyoutMenu";
 import categories from "../data/categories"
 import {SignOutButton, SignInButton, SignedIn, SignedOut} from "@clerk/clerk-react"
+import SignInBtn from "./SignInBtn";
+import SignOutBtn from "./SignOutBtn";
 
 const navigation = [
     {name: 'Контакты', href: '/contacts'},
@@ -49,10 +51,10 @@ export default function Header() {
                     </div>
                     <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                         <SignedOut>
-                            <SignInButton/>
+                            <SignInBtn/>
                         </SignedOut>
                         <SignedIn>
-                            <SignOutButton/>
+                            <SignOutBtn/>
                         </SignedIn>
                     </div>
                 </nav>
@@ -93,10 +95,10 @@ export default function Header() {
                                 </div>
                                 <div className="py-6">
                                     <SignedOut>
-                                        <SignInButton/>
+                                        <SignInBtn/>
                                     </SignedOut>
                                     <SignedIn>
-                                        <SignOutButton/>
+                                        <SignOutBtn/>
                                     </SignedIn>
                                 </div>
                             </div>
