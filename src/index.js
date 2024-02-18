@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {ClerkProvider} from "@clerk/clerk-react";
 
-const PUBLISHABLE_KEY = "pk_test_Y29uY3JldGUtZ251LTUyLmNsZXJrLmFjY291bnRzLmRldiQ"
+const PUBLISHABLE_KEY = process.env.REACT_APP_VITE_CLERK_PUBLISHABLE_KEY
 
 if (!PUBLISHABLE_KEY) {
     throw new Error("Missing Publishable Key")
