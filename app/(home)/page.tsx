@@ -1,16 +1,12 @@
-import Navbar from "@/app/(home)/_components/navbar";
-import {getUserById} from "@/lib/services/user-service";
-import {log} from "node:util";
+import {getProducts} from "@/actions/get-products";
+import * as React from "react"
 
-const HomePage = async()  => {
+const HomePage = async () => {
 
-    const user = await getUserById(1)
-    console.log("dsfdsf")
+    const products = await getProducts()
 
     return (
         <>
-            <Navbar/>
-            {user?.fullName}
         </>
     );
 }

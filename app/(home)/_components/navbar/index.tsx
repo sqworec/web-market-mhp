@@ -22,10 +22,7 @@ import {
     DropdownMenuGroup,
 
 } from "@/components/ui/dropdown-menu"
-import {Button} from "@/components/ui/button"
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
-import {compileNonPath} from "next/dist/shared/lib/router/utils/prepare-destination";
-import {getUserById} from "@/lib/services/user-service";
 
 export const Navbar = () => {
     return (
@@ -70,9 +67,9 @@ export const Navbar = () => {
             <div className="items-center mr-5">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Avatar>
+                        <Avatar className="hover:bg-black">
                             <AvatarImage src="#"/>
-                            <AvatarFallback>US</AvatarFallback>
+                            <AvatarFallback className="hover:cursor-default select-none">US</AvatarFallback>
                         </Avatar>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56">
@@ -85,7 +82,9 @@ export const Navbar = () => {
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
-                                Корзина
+                                <Link href="/cart">
+                                    Корзина
+                                </Link>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator/>
