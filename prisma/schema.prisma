@@ -10,17 +10,36 @@ datasource db {
 }
 
 model User {
-  id             Int     @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   fullName       String
-  email          String  @unique
+  email          String    @unique
   imgUrl         String?
-  hashedPassword String? @unique
-  role           Role    @default(USER)
+  hashedPassword String?   @unique
+  role           Role      @default(USER)
   Cart           Cart[]
+  Account        Account[]
+}
+
+model Account {
+  id                Int     @id @default(autoincrement())
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            Int
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  @@unique([provider, providerAccountId])
 }
 
 model Product {
-  id                Int     @id @default(autoincrement())
+  id                Int    @id @default(autoincrement())
   title             String
   price             Float
   category          String

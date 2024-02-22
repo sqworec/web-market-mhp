@@ -1,10 +1,13 @@
 import {getProducts} from "@/actions/get-products";
 import * as React from "react"
 
-export default async function HomePage(){
+const AboutPage = async () => {
 
     return (
         <>
+            Тут будет информация о нас
         </>
     );
 }
+
+export default AboutPage;

@@ -23,6 +23,18 @@ import {
 
 } from "@/components/ui/dropdown-menu"
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 
 export const Navbar = () => {
     return (
@@ -35,7 +47,9 @@ export const Navbar = () => {
                 <NavigationMenu>
                     <NavigationMenuList>
                         <NavigationMenuItem>
-                            <NavigationMenuTrigger>Продукция</NavigationMenuTrigger>
+                            <Link href="/products">
+                                <NavigationMenuTrigger>Продукция</NavigationMenuTrigger>
+                            </Link>
                             <NavigationMenuContent>
                                 <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                                     {categories.map((component) => (
@@ -89,11 +103,12 @@ export const Navbar = () => {
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator/>
                         <DropdownMenuItem>
-                            Авторизация
+                            <Link href="/auth">
+                                Авторизация
+                            </Link>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
-
             </div>
         </nav>
     );

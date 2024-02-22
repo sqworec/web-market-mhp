@@ -1,10 +1,13 @@
 import {getProducts} from "@/actions/get-products";
 import * as React from "react"
 
-export default async function HomePage(){
+const CartPage = async () => {
 
     return (
         <>
+            Корзина
         </>
     );
 }
+
+export default CartPage;

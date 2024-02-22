@@ -1,6 +1,6 @@
 export default function Background() {
     return(
-        <div className="sticky isolate px-6 pt-14 lg:px-8">
+        <div className="sticky isolate px-6 pt-14 lg:px-8 -z-10">
             <div
                 className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-800"
                 aria-hidden="true"
