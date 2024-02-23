@@ -3,27 +3,32 @@ generator client {
   previewFeatures = ["fullTextIndex", "fullTextSearch"]
 }
 
+// prisma/schema.prisma
 datasource db {
-  provider     = "postgresql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // uncomment next line if you use Prisma <5.10
+  // directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 model User {
-  id             Int       @id @default(autoincrement())
-  fullName       String
-  email          String    @unique
-  imgUrl         String?
-  hashedPassword String?   @unique
-  role           Role      @default(USER)
-  Cart           Cart[]
-  Account        Account[]
+  id       String    @id @default(cuid())
+  name     String?
+  email    String?   @unique
+  image    String?
+  password String
+  accounts Account[]
+  Cart     Cart[]
 }
 
 model Account {
-  id                Int     @id @default(autoincrement())
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId            Int
+  id                String  @id @default(cuid())
+  userId            String
   type              String
   provider          String
   providerAccountId String
@@ -34,6 +39,8 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -55,13 +62,8 @@ model Product {
 
 model Cart {
   id        Int     @id @default(autoincrement())
-  userId    Int
+  userId    String
   productId Int
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-}
-
-enum Role {
-  USER
-  ADMIN
 }

@@ -103,7 +103,7 @@ export const Navbar = () => {
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator/>
                         <DropdownMenuItem>
-                            <Link href="/auth">
+                            <Link href="/auth/login">
                                 Авторизация
                             </Link>
                         </DropdownMenuItem>
