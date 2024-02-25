@@ -16,13 +16,13 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     const {email, password, name} = validatedFields.data
     const hashedPassword = await bcryptjs.hash(password, 10)
 
-    const existingUser = await  db.user.findUnique({
+    const existingUser = await db.user.findUnique({
         where: {
             email,
         }
     })
 
-    if(existingUser) {
+    if (existingUser) {
         return {error: "Пользователь с такой почтой уже существует"}
     }
 
