@@ -51,8 +51,10 @@ export default function LoginPage() {
         startTransition(() => {
             login(values)
                 .then((data) => {
-                    setError(data.error)
-                    setSuccess(data.success)
+                    if (data !== undefined) {
+                        setError(data.error)
+                        setSuccess(data.error)
+                    }
                 })
         })
     }
@@ -118,11 +120,11 @@ export default function LoginPage() {
                         </form>
                     </Form>
                 </CardContent>
-            <p className="flex justify-around text-sm text-gray-500 hover:cursor-pointer hover:text-black"
-               onClick={() => {
-                   router.push("/auth/register")
-               }}>Зарегистрироваться
-            </p>
+                <p className="flex justify-around text-sm text-gray-500 hover:cursor-pointer hover:text-black"
+                   onClick={() => {
+                       router.push("/auth/register")
+                   }}>Зарегистрироваться
+                </p>
             </Card>
         </div>
     )

@@ -11,7 +11,7 @@ datasource db {
   // directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
-enum Role {
+enum UserRole {
   USER
   ADMIN
 }
@@ -22,6 +22,7 @@ model User {
   email    String?   @unique
   image    String?
   password String
+  role     UserRole  @default(USER)
   accounts Account[]
   Cart     Cart[]
 }

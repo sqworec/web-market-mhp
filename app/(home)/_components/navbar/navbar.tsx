@@ -91,12 +91,12 @@ export const Navbar = () => {
                         <DropdownMenuSeparator/>
                         <DropdownMenuGroup>
                             <DropdownMenuItem>
-                                <Link href="/profile">
+                                <Link href="/user/profile">
                                     Профиль
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
-                                <Link href="/cart">
+                                <Link href="/user/cart">
                                     Корзина
                                 </Link>
                             </DropdownMenuItem>
