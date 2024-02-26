@@ -1,5 +1,4 @@
 import React from "react";
-import {useRouter} from "next/navigation";
 import {Product} from "@prisma/client";
 import {Card, CardBody, CardFooter, Image} from "@nextui-org/react";
 import Link from "next/link";

@@ -12,7 +12,7 @@ const ProductsPage = async () => {
         <>
             <Container>
                 <div className="
-                    pt-24
+                    pt-20
                     grid
                     grid-cols-1
                     sm:grid-cols-1
