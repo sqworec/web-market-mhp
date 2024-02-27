@@ -4,7 +4,7 @@ import {addProductToCart} from "@/lib/services/cart-service";
 import {Button} from "@/components/ui/button";
 import React from "react";
 import {getProductById} from "@/lib/services/product-service";
-import {currentUser} from "@/lib/services/current-user";
+import {getCurrentUser} from "@/lib/services/get-current-user";
 
 interface AddToCartProps
 {
@@ -16,7 +16,7 @@ interface AddToCartProps
 export default async function AddToCard({userId, productId, amount} : AddToCartProps) {
 
     const product = await getProductById(productId)
-    const user = await currentUser()
+    const user = await getCurrentUser()
 
     const clickHandler = async () => {
         await addProductToCart(userId, product?.id.toString()!, amount)

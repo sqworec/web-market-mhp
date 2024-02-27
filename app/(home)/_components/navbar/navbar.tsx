@@ -34,9 +34,17 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import {useCurrentUser} from "@/hooks/use-current-user";
+import {logout} from "@/actions/logout";
 
 
 export const Navbar = () => {
+    const currentUser = useCurrentUser()
+
+    const handleLogOut = () => {
+        logout()
+    }
+
     return (
         <nav
             className="bg-white fixed top-0 w-full h-16 z-[49] px-2 border-b border-border/40 lg:px-4 flex justify-between items-center shadow-md">
@@ -96,17 +104,35 @@ export const Navbar = () => {
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
+                                <Link href="/user/favorites">
+                                    Избранное
+                                </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
                                 <Link href="/user/cart">
                                     Корзина
                                 </Link>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator/>
-                        <DropdownMenuItem>
-                            <Link href="/auth/login">
-                                Авторизация
-                            </Link>
-                        </DropdownMenuItem>
+
+                        {
+                            (!currentUser) &&
+                            <DropdownMenuItem>
+                                <Link href="/auth/login">
+                                    Авторизация
+                                </Link>
+                            </DropdownMenuItem>
+                        }
+
+                        {
+                            (currentUser) &&
+                            <DropdownMenuItem onClick={handleLogOut} className="text-red-500">
+                                Выйти
+                            </DropdownMenuItem>
+
+                        }
+
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>

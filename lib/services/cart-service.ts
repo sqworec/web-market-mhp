@@ -1,16 +1,30 @@
+"use server"
+
 import {db} from "@/lib/db";
-import {allowedDisplayValues} from "next/dist/compiled/@next/font/dist/constants";
 
 export const addProductToCart = async (userId: string, productId: string, amount: string) => {
     try {
-        const addToCart = await db.cart.create({
+        const newCartItem = await db.cart.create({
             data: {
                 userId,
                 productId: parseInt(productId, 10),
-                amount: parseInt(productId, 10),
+                amount: parseInt(amount, 10),
+            },
+        })
+        console.log('Created cart item:', newCartItem);
+    } catch (error) {
+        console.error('Error creating cart item:', error);
+    }
+}
+
+export const getCartProductsByUserId = async (userId: string) => {
+    try {
+        return await db.cart.findMany({
+            where: {
+                userId
             }
         })
-    } catch {
-        return null
+    } catch (error) {
+        console.error("Error getting cart products:", error)
     }
 }

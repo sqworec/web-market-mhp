@@ -26,7 +26,7 @@ const ProductsPage = async () => {
                     {products?.map((product) => (
                         <ProductCard
                             key={product.id}
-                            data={product}
+                            product={product}
                         />
                     ))}
                 </div>

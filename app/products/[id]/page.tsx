@@ -1,31 +1,46 @@
 "use client"
 
-import ProductPersonalCard from "@/app/products/product-personal-card";
 import {useState} from "react";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {addProductToCart} from "@/lib/services/cart-service";
+import {useCurrentUser} from "@/hooks/use-current-user";
+import Container from "@/app/container";
+import {addProductToFavorite} from "@/lib/services/favorites-service";
 
 export default function ProductPage({params}: { params: { id: string } }) {
     const [amount, setAmount] = useState("")
+    const user = useCurrentUser()
 
-    const clickHandle = () => {
-        addProductToCart("1", "1", amount)
+    const cartClickHandle = () => {
+        addProductToCart(user?.id!, params.id, amount)
+    }
+    const favoritesClickHandle = () => {
+        addProductToFavorite(user?.id!, params.id, amount)
     }
 
     return (
-        <>
-            <Input
-                type="number"
-                value={amount}
-                onChange={(i) => setAmount(i.target.value)}
-            />
+        <div className="mt-20">
+            <Container>
+                <Input
+                    type="number"
+                    value={amount}
+                    onChange={(i) => setAmount(i.target.value)}
+                />
 
-            <Button
-                onClick={clickHandle}
-            >
-                В корзину
-            </Button>
-        </>
+                <Button
+                    onClick={cartClickHandle}
+                    className="w-full mt-5"
+                >
+                    В корзину
+                </Button>
+                <Button
+                    onClick={favoritesClickHandle}
+                    className="w-full mt-5"
+                >
+                    В избранное
+                </Button>
+            </Container>
+        </div>
     )
 }

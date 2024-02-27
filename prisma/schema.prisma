@@ -17,14 +17,15 @@ enum UserRole {
 }
 
 model User {
-  id       String    @id @default(cuid())
+  id       String     @id @default(cuid())
   name     String?
-  email    String?   @unique
+  email    String?    @unique
   image    String?
   password String
-  role     UserRole  @default(USER)
+  role     UserRole   @default(USER)
   accounts Account[]
   Cart     Cart[]
+  Favorite Favorite[]
 }
 
 model Account {
@@ -47,7 +48,7 @@ model Account {
 }
 
 model Product {
-  id                Int    @id @default(autoincrement())
+  id                Int        @id @default(autoincrement())
   title             String
   price             Float
   category          String
@@ -59,9 +60,19 @@ model Product {
   description       String
   imgUrl            String
   Cart              Cart[]
+  Favorite          Favorite[]
 }
 
 model Cart {
+  id        Int     @id @default(autoincrement())
+  userId    String
+  productId Int
+  amount    Int
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Favorite {
   id        Int     @id @default(autoincrement())
   userId    String
   productId Int
