@@ -23,7 +23,7 @@ const ProductsPage = async () => {
                     gap-8
                     justify-between
                 ">
-                    {products.map((product) => (
+                    {products?.map((product) => (
                         <ProductCard
                             key={product.id}
                             data={product}
