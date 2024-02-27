@@ -1,17 +1,26 @@
-
-import {Product} from "@prisma/client";
 import {getProductById} from "@/lib/services/product-service";
+import {Cart} from "@prisma/client";
+import {addProductToCart} from "@/actions/add-product-to-cart";
 
 interface CartProductCardProps {
-    productId: string
+    cartProduct: Cart
 }
 
-export default async function CartProductCard({productId}: CartProductCardProps) {
-    const product = await getProductById(productId)
+export default async function CartProductCard({cartProduct}: CartProductCardProps) {
+    const product = await getProductById(cartProduct.productId.toString())
+
+    addProductToCart(cartProduct?.userId!, cartProduct.productId, cartProduct.amount.toString())
 
     return (
-        <div>
-            {product?.title}
+        <div
+            className="w-full h-[100px] rounded-xl drop-shadow-md bg-white mb-5 p-5 flex justify-between"
+        >
+            <div>
+                {product?.title}
+            </div>
+            <div>
+                {cartProduct.amount}
+            </div>
         </div>
     )
 }

@@ -13,7 +13,7 @@ export default async function CartPage() {
             <Container>
                 {products?.map((product) => (
                     <CartProductCard
-                        productId={product.productId.toString()}
+                        cartProduct={product}
                         key={product.id}
                     />
                 ))}

@@ -3,7 +3,7 @@
 import {useState} from "react";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
-import {addProductToCart} from "@/lib/services/cart-service";
+import {createNewProductInCart} from "@/lib/services/cart-service";
 import {useCurrentUser} from "@/hooks/use-current-user";
 import Container from "@/app/container";
 import {addProductToFavorite} from "@/lib/services/favorites-service";
@@ -13,7 +13,7 @@ export default function ProductPage({params}: { params: { id: string } }) {
     const user = useCurrentUser()
 
     const cartClickHandle = () => {
-        addProductToCart(user?.id!, params.id, amount)
+        createNewProductInCart(user?.id!, params.id, amount)
     }
     const favoritesClickHandle = () => {
         addProductToFavorite(user?.id!, params.id, amount)

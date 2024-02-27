@@ -2,7 +2,7 @@
 
 import {db} from "@/lib/db";
 
-export const addProductToCart = async (userId: string, productId: string, amount: string) => {
+export const createNewProductInCart = async (userId: string, productId: string, amount: string) => {
     try {
         const newCartItem = await db.cart.create({
             data: {

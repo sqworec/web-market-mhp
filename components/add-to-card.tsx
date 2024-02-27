@@ -1,6 +1,6 @@
 "use server"
 
-import {addProductToCart} from "@/lib/services/cart-service";
+import {createNewProductInCart} from "@/lib/services/cart-service";
 import {Button} from "@/components/ui/button";
 import React from "react";
 import {getProductById} from "@/lib/services/product-service";
@@ -19,7 +19,7 @@ export default async function AddToCard({userId, productId, amount} : AddToCartP
     const user = await getCurrentUser()
 
     const clickHandler = async () => {
-        await addProductToCart(userId, product?.id.toString()!, amount)
+        await createNewProductInCart(userId, product?.id.toString()!, amount)
         console.log(user?.id!, product?.id.toString()!, amount)
     }
 
