@@ -4,7 +4,7 @@ import {db} from "@/lib/db";
 
 export const createNewProductInCart = async (userId: string, productId: string, amount: string) => {
     try {
-        const newCartItem = await db.cart.create({
+        await db.cart.create({
             data: {
                 userId,
                 productId: parseInt(productId, 10),
@@ -28,11 +28,14 @@ export const getCartProductsByUserId = async (userId: string) => {
     }
 }
 
-export const getCartProductByProductId = async (productId: string) => {
+export const getCartProductByProductId = async (productId: string, userId: string) => {
     try {
         return await db.cart.findUnique({
             where: {
-                productId: parseInt(productId, 10)
+                userId_productId: {
+                    userId,
+                    productId: parseInt(productId, 10),
+                },
             }
         })
     } catch (error) {
@@ -40,16 +43,17 @@ export const getCartProductByProductId = async (productId: string) => {
     }
 }
 
-export const updateCartProductByProductId = async (productId: number, amount: string) => {
+export const updateCartProductByProductId = async (userId: string, productId: number, updAmount: string) => {
     try {
         return await db.cart.update({
             where: {
-                productId: productId
+                userId_productId: {
+                    userId,
+                    productId: productId,
+                },
             },
             data: {
-                amount: {
-                    increment: parseInt(amount, 10)
-                }
+                amount: parseInt(updAmount, 10)
             }
         })
 

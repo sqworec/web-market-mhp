@@ -7,23 +7,23 @@ import {
 import {db} from "@/lib/db";
 import toast from "react-hot-toast";
 
-export const addProductToCart = async (userId: string, productId: number, updAmount: string) => {
+export const addProductToCart = async (userId: string, productId: number, amount: string) => {
 
     const isExisting = await db.cart.findUnique(
         {
             where: {
-                productId: productId,
+                userId_productId: {
+                    userId,
+                    productId,
+                },
             }
         }
     )
 
-    if (!isExisting){
-        await createNewProductInCart(userId, productId.toString(), updAmount)
-        toast.success("Добавлено в корзину")
-    }
-    else {
-        await updateCartProductByProductId(productId, updAmount)
-        toast.success("Корзина обновлена")
+    if (!isExisting) {
+        await createNewProductInCart(userId, productId.toString(), amount)
+    } else {
+        await updateCartProductByProductId(userId, productId, amount)
     }
 
 }

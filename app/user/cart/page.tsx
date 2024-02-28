@@ -1,5 +1,4 @@
 import Container from "@/app/container";
-import {useCurrentUser} from "@/hooks/use-current-user";
 import {getCartProductsByUserId} from "@/lib/services/cart-service";
 import {getCurrentUser} from "@/lib/services/get-current-user";
 import CartProductCard from "@/app/user/cart-product-card";
@@ -11,12 +10,22 @@ export default async function CartPage() {
     return (
         <div className="mt-20">
             <Container>
-                {products?.map((product) => (
-                    <CartProductCard
-                        cartProduct={product}
-                        key={product.id}
-                    />
-                ))}
+
+                {
+                    (products?.length === 0) &&
+                    <div className="flex justify-center items-center  text-xl text-neutral-500">
+                        В корзине пока что пусто. Добавьте сюда то, что хотите заказать!
+                    </div>
+                }
+
+                {products
+                    ?.sort((a, b) => a.id - b.id)
+                    .map((product) => (
+                        <CartProductCard
+                            cartProduct={product}
+                            key={product.id}
+                        />
+                    ))}
             </Container>
         </div>
     )

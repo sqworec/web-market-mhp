@@ -7,22 +7,27 @@ export default async function FavoritesPage() {
     const currentUser = await getCurrentUser()
     const products = await getFavoriteProductsByUserId(currentUser?.id!)
 
+
     return (
         <div className="mt-20">
             <Container>
-                {products?.map((product) => (
-                    <FavoriteProductCard
-                        favoriteProduct={product}
-                        key={product.id}
-                    />
-                ))}
-
                 {
-                    (!products) &&
-                    <div>
-                        Пусто
+                    (products?.length === 0) &&
+                    <div className="flex justify-center items-center  text-xl text-neutral-500">
+                        В избранном пока что пусто. Добавьте сюда то, что понравилось!
                     </div>
                 }
+
+                {products
+                    ?.sort((a, b) => a.id - b.id)
+                    .map((product) => (
+                        <FavoriteProductCard
+                            favoriteProduct={product}
+                            key={product.id}
+                        />
+                    ))}
+
+
             </Container>
         </div>
     )

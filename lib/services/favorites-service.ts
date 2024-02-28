@@ -4,23 +4,24 @@ import {db} from "@/lib/db";
 
 export const addProductToFavorite = async (userId: string, productId: string) => {
     try {
-        const newFavoritesItem = await db.favorite.create({
+        await db.favorite.create({
             data: {
                 userId,
                 productId: parseInt(productId, 10),
             },
         })
-        console.log('Created favorite item:', newFavoritesItem);
     } catch (error) {
         console.error('Error creating favorite item:', error);
     }
 }
 export const removeProductFromFavorite = async (userId: string, productId: string) => {
     try {
-        const removedFavoriteItem = await db.favorite.delete({
+        await db.favorite.delete({
             where: {
-                userId,
-                productId: parseInt(productId, 10)
+                userId_productId: {
+                    userId,
+                    productId: parseInt(productId, 10),
+                },
             },
         })
     } catch (error) {
@@ -44,8 +45,10 @@ export const getFavoriteProductByProductId = async (userId: string, productId: s
     try {
         return await db.favorite.findUnique({
             where: {
-                userId,
-                productId: parseInt(productId, 10)
+                userId_productId: {
+                    userId,
+                    productId: parseInt(productId, 10),
+                },
             }
         })
     } catch (error) {

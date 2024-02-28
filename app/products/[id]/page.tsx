@@ -8,6 +8,7 @@ import {AddToCartButton} from "@/app/products/_components/add-to-cart";
 import {toggleFavorite} from "@/actions/toggle-favorite";
 import {Button} from "@/components/ui/button";
 import {isAlreadyFavorite} from "@/lib/services/favorites-service";
+import {getCartProductByProductId} from "@/lib/services/cart-service";
 
 export default function ProductPage({params}: { params: { id: string } }) {
     const [amount, setAmount] = useState("1")
@@ -24,6 +25,11 @@ export default function ProductPage({params}: { params: { id: string } }) {
         isAlreadyFavorite(user?.id!, params.id).then(i => {
             if (!i?.id) setFavoriteLabel("Добавить в избранное")
             else setFavoriteLabel("Удалить из избранного")
+        })
+
+        getCartProductByProductId(params.id, user?.id!).then(i => {
+            const isExisting = i?.amount!
+            if (isExisting) setAmount(i?.amount!.toString())
         })
 
     }, [user, params]);

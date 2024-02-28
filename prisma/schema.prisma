@@ -66,16 +66,20 @@ model Product {
 model Cart {
   id        Int     @id @default(autoincrement())
   userId    String
-  productId Int     @unique
+  productId Int
   amount    Int
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
 }
 
 model Favorite {
   id        Int     @id @default(autoincrement())
   userId    String
-  productId Int     @unique
+  productId Int
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
 }

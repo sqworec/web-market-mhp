@@ -40,7 +40,8 @@ import {logout} from "@/actions/logout";
 
 export const Navbar = () => {
     const currentUser = useCurrentUser()
-
+    let userAvatar = "LG"
+    if (currentUser) userAvatar = (currentUser?.name![0]! + currentUser?.name![(currentUser?.name!).length - 1]!).toUpperCase()
     const handleLogOut = () => {
         logout()
     }
@@ -55,7 +56,7 @@ export const Navbar = () => {
                 <NavigationMenu>
                     <NavigationMenuList>
                         <NavigationMenuItem>
-                            <Link href="/products">
+                            <Link href={"/products"}>
                                 <NavigationMenuTrigger>Продукция</NavigationMenuTrigger>
                             </Link>
                             <NavigationMenuContent>
@@ -72,12 +73,12 @@ export const Navbar = () => {
                                 </ul>
                             </NavigationMenuContent>
                         </NavigationMenuItem> <NavigationMenuItem>
-                        <Link href="/contacts" legacyBehavior passHref>
+                        <Link href={"/contacts"} legacyBehavior passHref>
                             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                                 Контакты
                             </NavigationMenuLink>
                         </Link>
-                        <Link href="/about" legacyBehavior passHref>
+                        <Link href={"/about"} legacyBehavior passHref>
                             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                                 О нас
                             </NavigationMenuLink>
@@ -91,35 +92,40 @@ export const Navbar = () => {
                     <DropdownMenuTrigger asChild>
                         <Avatar className="hover:bg-black">
                             <AvatarImage src="#"/>
-                            <AvatarFallback className="hover:cursor-default select-none">US</AvatarFallback>
+                            <AvatarFallback className="hover:cursor-default select-none">{userAvatar}</AvatarFallback>
                         </Avatar>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56">
                         <DropdownMenuLabel>Мой аккаунт</DropdownMenuLabel>
                         <DropdownMenuSeparator/>
-                        <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                <Link href="/user/profile">
-                                    Профиль
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Link href="/user/favorites">
-                                    Избранное
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Link href="/user/cart">
-                                    Корзина
-                                </Link>
-                            </DropdownMenuItem>
-                        </DropdownMenuGroup>
-                        <DropdownMenuSeparator/>
+                        {
+                            (currentUser) &&
+                            <>
+                                <DropdownMenuGroup>
+                                    <DropdownMenuItem>
+                                        <Link href={"/user/profile"}>
+                                            Профиль
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <Link href={"/user/favorites"}>
+                                            Избранное
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <Link href={"/user/cart"}>
+                                            Корзина
+                                        </Link>
+                                    </DropdownMenuItem>
+                                </DropdownMenuGroup>
+                                <DropdownMenuSeparator/>
+                            </>
+                        }
 
                         {
                             (!currentUser) &&
                             <DropdownMenuItem>
-                                <Link href="/auth/login">
+                                <Link href={"/auth/login"}>
                                     Авторизация
                                 </Link>
                             </DropdownMenuItem>
