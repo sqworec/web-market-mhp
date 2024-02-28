@@ -11,7 +11,6 @@ export const createNewProductInCart = async (userId: string, productId: string, 
                 amount: parseInt(amount, 10),
             },
         })
-        console.log('Created cart item:', newCartItem);
     } catch (error) {
         console.error('Error creating cart item:', error);
     }
@@ -37,6 +36,24 @@ export const getCartProductByProductId = async (productId: string) => {
             }
         })
     } catch (error) {
-        console.error("Error getting cart products:", error)
+        console.error("Error getting cart product:", error)
+    }
+}
+
+export const updateCartProductByProductId = async (productId: number, amount: string) => {
+    try {
+        return await db.cart.update({
+            where: {
+                productId: productId
+            },
+            data: {
+                amount: {
+                    increment: parseInt(amount, 10)
+                }
+            }
+        })
+
+    } catch (error) {
+        console.error("Error updating cart product:", error)
     }
 }

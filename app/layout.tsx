@@ -5,6 +5,7 @@ import Background from "@/components/background";
 import Navbar from "@/app/(home)/_components/navbar/navbar";
 import {auth} from "@/auth";
 import {SessionProvider} from "next-auth/react";
+import {Toaster} from "react-hot-toast";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -27,6 +28,7 @@ export default async function RootLayout({
             <>
                 <Background/>
                 <Navbar/>
+                <Toaster position={"top-center"}/>
                 {children}
             </>
             </body>

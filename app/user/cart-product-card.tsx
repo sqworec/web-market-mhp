@@ -1,6 +1,5 @@
 import {getProductById} from "@/lib/services/product-service";
 import {Cart} from "@prisma/client";
-import {addProductToCart} from "@/actions/add-product-to-cart";
 
 interface CartProductCardProps {
     cartProduct: Cart

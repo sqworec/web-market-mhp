@@ -1,33 +1,29 @@
 "use server"
 
-import {createNewProductInCart, getCartProductByProductId} from "@/lib/services/cart-service";
+import {
+    createNewProductInCart,
+    updateCartProductByProductId
+} from "@/lib/services/cart-service";
 import {db} from "@/lib/db";
+import toast from "react-hot-toast";
 
 export const addProductToCart = async (userId: string, productId: number, updAmount: string) => {
-
-    const currentProduct = await getCartProductByProductId(productId.toString())
 
     const isExisting = await db.cart.findUnique(
         {
             where: {
-                productId : productId,
+                productId: productId,
             }
         }
     )
 
-    if (!isExisting)
-        createNewProductInCart(userId, productId.toString(), updAmount)
+    if (!isExisting){
+        await createNewProductInCart(userId, productId.toString(), updAmount)
+        toast.success("Добавлено в корзину")
+    }
     else {
-        await db.cart.update({
-            where: {
-                productId: productId
-            },
-            data: {
-                amount: {
-                    increment: parseInt(updAmount, 10)
-                }
-            }
-        })
+        await updateCartProductByProductId(productId, updAmount)
+        toast.success("Корзина обновлена")
     }
 
 }

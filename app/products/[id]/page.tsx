@@ -1,21 +1,38 @@
 "use client"
 
-import {useState} from "react";
+import {useEffect, useState, useTransition} from "react";
 import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
-import {createNewProductInCart} from "@/lib/services/cart-service";
 import {useCurrentUser} from "@/hooks/use-current-user";
 import Container from "@/app/container";
-import {addProductToFavorite} from "@/lib/services/favorites-service";
-import {addProductToCart} from "@/actions/add-product-to-cart";
-import {AddToCartButton} from "@/app/products/add-to-cart";
+import {AddToCartButton} from "@/app/products/_components/add-to-cart";
+import {toggleFavorite} from "@/actions/toggle-favorite";
+import {Button} from "@/components/ui/button";
+import {isAlreadyFavorite} from "@/lib/services/favorites-service";
 
 export default function ProductPage({params}: { params: { id: string } }) {
     const [amount, setAmount] = useState("1")
+    const [favoriteLabel, setFavoriteLabel] = useState("Добавить в избранное")
+    const [isPending, startTransition] = useTransition()
     const user = useCurrentUser()
 
-    const favoritesClickHandle = () => {
-        addProductToFavorite(user?.id!, params.id)
+    const favoriteLabelToggle = () => {
+        if (favoriteLabel == "Добавить в избранное") setFavoriteLabel("Удалить из избранного")
+        if (favoriteLabel == "Удалить из избранного") setFavoriteLabel("Добавить в избранное")
+    }
+
+    useEffect(() => {
+        isAlreadyFavorite(user?.id!, params.id).then(i => {
+            if (!i?.id) setFavoriteLabel("Добавить в избранное")
+            else setFavoriteLabel("Удалить из избранного")
+        })
+
+    }, [user, params]);
+
+    const favotiteClickHandler = () => {
+        startTransition(() => {
+            toggleFavorite(user?.id!, params.id)
+            favoriteLabelToggle()
+        })
     }
 
     return (
@@ -32,10 +49,11 @@ export default function ProductPage({params}: { params: { id: string } }) {
                     amount={amount}
                 />
                 <Button
-                    onClick={favoritesClickHandle}
+                    disabled={isPending}
+                    onClick={favotiteClickHandler}
                     className="w-full mt-5"
                 >
-                    В избранное
+                    {favoriteLabel}
                 </Button>
             </Container>
         </div>
