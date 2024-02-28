@@ -28,3 +28,15 @@ export const getCartProductsByUserId = async (userId: string) => {
         console.error("Error getting cart products:", error)
     }
 }
+
+export const getCartProductByProductId = async (productId: string) => {
+    try {
+        return await db.cart.findUnique({
+            where: {
+                productId: parseInt(productId, 10)
+            }
+        })
+    } catch (error) {
+        console.error("Error getting cart products:", error)
+    }
+}

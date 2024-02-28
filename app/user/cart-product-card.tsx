@@ -9,7 +9,6 @@ interface CartProductCardProps {
 export default async function CartProductCard({cartProduct}: CartProductCardProps) {
     const product = await getProductById(cartProduct.productId.toString())
 
-    addProductToCart(cartProduct?.userId!, cartProduct.productId, cartProduct.amount.toString())
 
     return (
         <div

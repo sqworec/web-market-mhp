@@ -2,13 +2,12 @@
 
 import {db} from "@/lib/db";
 
-export const addProductToFavorite = async (userId: string, productId: string, amount: string) => {
+export const addProductToFavorite = async (userId: string, productId: string) => {
     try {
-        const newFavoritesItem = await db.cart.create({
+        const newFavoritesItem = await db.favorite.create({
             data: {
                 userId,
                 productId: parseInt(productId, 10),
-                amount: parseInt(amount, 10),
             },
         })
         console.log('Created favorite item:', newFavoritesItem);
@@ -19,7 +18,7 @@ export const addProductToFavorite = async (userId: string, productId: string, am
 
 export const getFavoriteProductsByUserId = async (userId: string) => {
     try {
-        const products = await db.cart.findMany({
+        const products = await db.favorite.findMany({
             where: {
                 userId
             }

@@ -1,23 +1,31 @@
-import {createNewProductInCart} from "@/lib/services/cart-service";
+"use server"
+
+import {createNewProductInCart, getCartProductByProductId} from "@/lib/services/cart-service";
 import {db} from "@/lib/db";
 
-export const addProductToCart = async (userId: string, productId: number, amount: string) => {
+export const addProductToCart = async (userId: string, productId: number, updAmount: string) => {
 
-    const isExisting = await db.cart.findUnique({
-        where: {
-            productId: productId
+    const currentProduct = await getCartProductByProductId(productId.toString())
+
+    const isExisting = await db.cart.findUnique(
+        {
+            where: {
+                productId : productId,
+            }
         }
-    })
+    )
 
     if (!isExisting)
-        createNewProductInCart(userId, productId.toString(), amount)
+        createNewProductInCart(userId, productId.toString(), updAmount)
     else {
         await db.cart.update({
             where: {
                 productId: productId
             },
             data: {
-                amount: 
+                amount: {
+                    increment: parseInt(updAmount, 10)
+                }
             }
         })
     }
