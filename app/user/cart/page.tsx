@@ -6,8 +6,7 @@ import {getProductById} from "@/lib/services/product-service";
 
 export default async function CartPage() {
     const currentUser = await getCurrentUser()
-    const products = await getCartProductsByUserId(currentUser?.id!)
-
+    let products = await getCartProductsByUserId(currentUser?.id!)
 
     return (
         <div className="mt-20">
@@ -18,7 +17,6 @@ export default async function CartPage() {
                         В корзине пока что пусто. Добавьте сюда то, что хотите заказать!
                     </div>
                 }
-
                 {products
                     ?.sort((a, b) => a.id - b.id)
                     .map((product) => (

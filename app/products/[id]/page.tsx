@@ -9,6 +9,7 @@ import {toggleFavorite} from "@/actions/toggle-favorite";
 import {Button} from "@/components/ui/button";
 import {isAlreadyFavorite} from "@/lib/services/favorites-service";
 import {getCartProductByProductId} from "@/lib/services/cart-service";
+import {notFound} from "next/navigation";
 
 export default function ProductPage({params}: { params: { id: string } }) {
     const [amount, setAmount] = useState("1")

@@ -1,42 +1,28 @@
-"use client"
-
 import {getProductById} from "@/lib/services/product-service";
 import {Cart, Product} from "@prisma/client";
 import Link from "next/link";
 import {Trash2} from "lucide-react";
-import {deleteProductFromCart} from "@/lib/services/cart-service";
-import {useEffect, useState} from "react";
-import toast from "react-hot-toast";
+import {deleteProductFromCart, getCartProductByProductId} from "@/lib/services/cart-service";
+import DeleteFromCartButton from "@/app/user/_components/delete-from-cart-button";
 
 interface CartProductCardProps {
     cartProduct: Cart,
     userId: string
 }
 
-export default function CartProductCard({cartProduct, userId}: CartProductCardProps) {
-    const [product, setProduct] = useState<Product | null>(null);
+export default async function CartProductCard({cartProduct, userId}: CartProductCardProps) {
 
-    useEffect(() => {
-        const fetchProduct = async () => {
-            const fetchedProduct = await getProductById(cartProduct?.productId!.toString()!)
-            setProduct(fetchedProduct)
-        }
-        fetchProduct()
-    }, [cartProduct?.productId]);
-    const deleteHandler = () => {
-        deleteProductFromCart(userId, product?.id!.toString()!)
-        toast.success("Удалено!")
-    }
+    const product = await getProductById(cartProduct?.productId!.toString()!);
 
     return (
         <div
-            className="relative w-full h-[100px] rounded-xl drop-shadow-md bg-white mb-5 p-0"
+            className="relative w-full h-[100px] rounded-xl drop-shadow-md bg-white mb-5 p-0 z-10"
         >
-            <img
-                src={product?.imgUrl}
-                alt={product?.title}
-                className="opacity-30 absolute w-full h-full object-cover rounded-xl"
-            />
+            {/*<img*/}
+            {/*    src={product?.imgUrl}*/}
+            {/*    alt={product?.title}*/}
+            {/*    className="opacity-30 absolute w-full h-full rounded-xl object-cover select-none z-0"*/}
+            {/*/>*/}
 
             <div className="flex h-full justify-between items-center py-5 px-10">
                 <Link href={`/products/${product?.id}`}>
@@ -53,12 +39,7 @@ export default function CartProductCard({cartProduct, userId}: CartProductCardPr
                             {Math.round(cartProduct?.amount * product?.price! * 100) / 100} BYN
                         </div>
                     </div>
-                    <div className="items-center flex justify-between ml-10">
-                        <Trash2
-                            onClick={deleteHandler}
-                            className="text-red-500"
-                        />
-                    </div>
+                   <DeleteFromCartButton userId={userId} productId={product?.id!.toString()!}/>
                 </div>
             </div>
         </div>

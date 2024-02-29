@@ -70,6 +70,16 @@ export const Navbar = () => {
                                             {component.description}
                                         </ListItem>
                                     ))}
+                                    {
+                                        (currentUser?.role === "ADMIN") &&
+                                        <ListItem
+                                            key={"adm"}
+                                            title={"Добавить продукцию"}
+                                            href={"/products/add"}
+                                        >
+                                            Добавьте новую продукцию!
+                                        </ListItem>
+                                    }
                                 </ul>
                             </NavigationMenuContent>
                         </NavigationMenuItem> <NavigationMenuItem>
