@@ -9,7 +9,7 @@ import {toggleFavorite} from "@/actions/toggle-favorite";
 import {Button} from "@/components/ui/button";
 import {isAlreadyFavorite} from "@/lib/services/favorites-service";
 import {getCartProductByProductId} from "@/lib/services/cart-service";
-import {notFound} from "next/navigation";
+import ProductCard from "@/app/products/_components/product-card";
 
 export default function ProductPage({params}: { params: { id: string } }) {
     const [amount, setAmount] = useState("1")
@@ -33,9 +33,10 @@ export default function ProductPage({params}: { params: { id: string } }) {
             if (isExisting) setAmount(i?.amount!.toString())
         })
 
-    }, [user, params]);
+    }, [user, params, params?.id])
 
-    const favotiteClickHandler = () => {
+
+    const favoriteClickHandler = () => {
         startTransition(() => {
             toggleFavorite(user?.id!, params.id)
             favoriteLabelToggle()
@@ -45,6 +46,7 @@ export default function ProductPage({params}: { params: { id: string } }) {
     return (
         <div className="mt-20">
             <Container>
+                <ProductCard productId={params.id}/>
                 <Input
                     type="number"
                     value={amount}
@@ -57,7 +59,7 @@ export default function ProductPage({params}: { params: { id: string } }) {
                 />
                 <Button
                     disabled={isPending}
-                    onClick={favotiteClickHandler}
+                    onClick={favoriteClickHandler}
                     className="w-full mt-5"
                 >
                     {favoriteLabel}

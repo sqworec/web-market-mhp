@@ -61,6 +61,13 @@ export const Navbar = () => {
                             </Link>
                             <NavigationMenuContent>
                                 <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                                    <ListItem
+                                        key={"allProducts"}
+                                        title={"Вся продукция"}
+                                        href={"/products"}
+                                    >
+                                        Все
+                                    </ListItem>
                                     {categories.map((component) => (
                                         <ListItem
                                             key={component.title}
@@ -73,7 +80,7 @@ export const Navbar = () => {
                                     {
                                         (currentUser?.role === "ADMIN") &&
                                         <ListItem
-                                            key={"adm"}
+                                            key={"admin"}
                                             title={"Добавить продукцию"}
                                             href={"/products/add"}
                                         >

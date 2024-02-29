@@ -1,9 +1,5 @@
 const categories = [
     {
-        title: 'Все',
-        description: 'Любая выпечка',
-        href: '/products',
-    }, {
         title: 'Хлеб',
         description: 'Свежий хлеб',
         href: '/products/hlep',

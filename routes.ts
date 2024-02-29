@@ -1,6 +1,7 @@
 export const publicRoutes = [
     "/",
-    "/products"
+    "/products",
+    // "http://localhost:3000/api/uploadthing?slug=imageUploader"
 ]
 
 export const authRoutes = [

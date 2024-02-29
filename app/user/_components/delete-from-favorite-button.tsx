@@ -5,19 +5,19 @@ import toast from "react-hot-toast";
 import {deleteProductFromCart} from "@/lib/services/cart-service";
 import {useEffect} from "react";
 import {useRouter} from "next/navigation";
+import {toggleFavorite} from "@/actions/toggle-favorite";
 
 interface DeleteFromCartButtonProps {
     userId: string;
     productId: string;
 }
 
-export default function DeleteFromCartButton({userId, productId}: DeleteFromCartButtonProps) {
+export default function DeleteFromFavoriteButton({userId, productId}: DeleteFromCartButtonProps) {
 
     const router = useRouter();
 
     const deleteHandler = () => {
-        deleteProductFromCart(userId, productId).then(i => {
-                toast.success("Удалено!")
+        toggleFavorite(userId, productId).then(i => {
                 router.refresh()
         })
     }

@@ -1,9 +1,12 @@
+"use server"
+
 import {db} from "@/lib/db";
 
 export const getAllProducts = async () => {
     try {
         return await db.product.findMany()
-    } catch {
+    } catch (error) {
+        console.error("Error getting all products: ", error)
         return null
     }
 }
@@ -16,9 +19,39 @@ export const getProductById = async (id: string) => {
             }
         })
 
-    } catch {
+    } catch (error) {
+        console.error("Error getting product by id: ", error)
         return null
     }
-
 }
 
+export const createProduct = async (title: string,
+                                    price: string,
+                                    category: string,
+                                    proteins: string,
+                                    fats: string,
+                                    carbohydrates: string,
+                                    energyValue: string,
+                                    storageConditions: string,
+                                    description: string,
+                                    imgUrl: string) => {
+    try {
+        await db.product.create({
+            data: {
+                title,
+                price: parseFloat(price),
+                category,
+                proteins: parseFloat(proteins),
+                fats: parseFloat(fats),
+                carbohydrates: parseFloat(carbohydrates),
+                energyValue: parseFloat(energyValue),
+                storageConditions,
+                description,
+                imgUrl
+            }
+        })
+    } catch (error) {
+        console.error("Error creating product: ", error)
+        return null
+    }
+}

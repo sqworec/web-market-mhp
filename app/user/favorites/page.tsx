@@ -23,6 +23,7 @@ export default async function FavoritesPage() {
                     .map((product) => (
                         <FavoriteProductCard
                             favoriteProduct={product}
+                            userId={currentUser?.id!.toString()!}
                             key={product.id}
                         />
                     ))}
