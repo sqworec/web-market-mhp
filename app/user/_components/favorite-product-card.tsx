@@ -12,10 +12,20 @@ export default async function FavoriteProductCard({favoriteProduct}: FavoritePro
     return (
         <Link href={`/products/${product?.id}`}>
             <div
-                className="w-full h-[100px] rounded-xl drop-shadow-md bg-white mb-5 p-5 flex justify-between"
+                className="relative w-full h-[100px] rounded-xl drop-shadow-md bg-white mb-5 p-0"
             >
-                <div>
-                    {product?.title}
+                <img
+                    src={product?.imgUrl}
+                    alt={product?.title}
+                    className="opacity-30 absolute w-full h-full object-cover rounded-xl"
+                />
+
+                <div
+                    className="flex h-full justify-between items-center py-5 px-10"
+                >
+                    <b>
+                        {product?.title}
+                    </b>
                 </div>
             </div>
         </Link>

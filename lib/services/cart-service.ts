@@ -16,6 +16,21 @@ export const createNewProductInCart = async (userId: string, productId: string, 
     }
 }
 
+export const deleteProductFromCart = async (userId: string, productId: string) => {
+    try {
+        await db.cart.delete({
+            where: {
+                userId_productId: {
+                    userId,
+                    productId: parseInt(productId, 10),
+                },
+            },
+        })
+    } catch (error) {
+        console.error('Error deleting cart item:', error);
+    }
+}
+
 export const getCartProductsByUserId = async (userId: string) => {
     try {
         return await db.cart.findMany({

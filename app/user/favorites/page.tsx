@@ -1,7 +1,7 @@
 import Container from "@/app/container";
 import {getCurrentUser} from "@/lib/services/get-current-user";
 import {getFavoriteProductsByUserId} from "@/lib/services/favorites-service";
-import FavoriteProductCard from "@/app/user/favorite-product-card";
+import FavoriteProductCard from "@/app/user/_components/favorite-product-card";
 
 export default async function FavoritesPage() {
     const currentUser = await getCurrentUser()

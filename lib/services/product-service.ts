@@ -2,9 +2,7 @@ import {db} from "@/lib/db";
 
 export const getAllProducts = async () => {
     try {
-        const prodcuts = await db.product.findMany()
-        
-        return prodcuts
+        return await db.product.findMany()
     } catch {
         return null
     }
@@ -12,13 +10,12 @@ export const getAllProducts = async () => {
 
 export const getProductById = async (id: string) => {
     try {
-        const prodcut = await db.product.findUnique({
+        return await db.product.findUnique({
             where: {
                 id: parseInt(id, 10)
             }
         })
 
-        return prodcut
     } catch {
         return null
     }

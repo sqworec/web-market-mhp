@@ -1,7 +1,7 @@
 "use server"
 
 import {
-    createNewProductInCart,
+    createNewProductInCart, deleteProductFromCart,
     updateCartProductByProductId
 } from "@/lib/services/cart-service";
 import {db} from "@/lib/db";
@@ -20,7 +20,11 @@ export const addProductToCart = async (userId: string, productId: number, amount
         }
     )
 
-    if (!isExisting) {
+    if (isExisting && amount === "0") {
+        await deleteProductFromCart(userId, productId.toString())
+    } else if (!isExisting && amount === "0") {
+        return null
+    } else if (!isExisting) {
         await createNewProductInCart(userId, productId.toString(), amount)
     } else {
         await updateCartProductByProductId(userId, productId, amount)
