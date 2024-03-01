@@ -163,7 +163,7 @@ export default function AddProductPage() {
                     <div className="text-xl font-bold">
                         Описание
                     </div>
-                    <div className="my-5 mb-10">
+                    <div className="my-5">
                         <Textarea
                             value={description}
                             onChange={(i) => {
@@ -173,6 +173,9 @@ export default function AddProductPage() {
                         />
                     </div>
                     <div className="my-5">
+                        <div className="font-bold mb-2">
+                            Изображение
+                        </div>
                         <UploadButton
                             content={{button: "Добавить файл"}}
                             appearance={{

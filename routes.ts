@@ -4,6 +4,10 @@ export const publicRoutes = [
     // "http://localhost:3000/api/uploadthing?slug=imageUploader"
 ]
 
+export const adminRoutes = [
+    "/products/add"
+]
+
 export const authRoutes = [
     "/auth/login",
     "/auth/register"
