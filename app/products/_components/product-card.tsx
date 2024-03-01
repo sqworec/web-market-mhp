@@ -9,10 +9,6 @@ interface ProductCardProps {
 export default function ProductCard({productId}: ProductCardProps) {
     const [product, setProduct] = useState<Product | null>(null)
 
-    getProductById(productId).then(i => {
-        setProduct(i)
-    })
-
     return (
         <div>
              adsf {!!product?.title}

@@ -13,14 +13,9 @@ import ProductCard from "@/app/products/_components/product-card";
 
 export default function ProductPage({params}: { params: { id: string } }) {
     const [amount, setAmount] = useState("1")
-    const [favoriteLabel, setFavoriteLabel] = useState("Добавить в избранное")
     const [isPending, startTransition] = useTransition()
     const user = useCurrentUser()
 
-    const favoriteLabelToggle = () => {
-        if (favoriteLabel == "Добавить в избранное") setFavoriteLabel("Удалить из избранного")
-        if (favoriteLabel == "Удалить из избранного") setFavoriteLabel("Добавить в избранное")
-    }
 
     useEffect(() => {
         isAlreadyFavorite(user?.id!, params.id).then(i => {

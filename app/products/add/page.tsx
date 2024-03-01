@@ -2,7 +2,7 @@
 
 import Container from "@/app/container";
 import {Input} from "@/components/ui/input";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Separator} from "@/components/ui/separator";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/select"
 import categories from "@/components/categories";
 import {UploadButton} from "@/utils/uploadthing";
+import {useCurrentUser} from "@/hooks/use-current-user";
+import {useRouter} from "next/navigation";
 
 export default function AddProductPage() {
     const [title, setTitle] = useState("")
@@ -30,6 +32,14 @@ export default function AddProductPage() {
     const [price, setPrice] = useState("")
     const [category, setCategory] = useState("")
 
+    const user = useCurrentUser()
+    const router = useRouter()
+
+    useEffect(() => {
+        if (user?.role !== "ADMIN") router.push("/products")
+    }, [user?.role, router]);
+
+    if (user?.role !== "ADMIN") return null
     const addHandler = () => {
         createProduct(
             title,
@@ -56,6 +66,7 @@ export default function AddProductPage() {
             setCategory("")
         })
     }
+
     return (
         <Container>
             <div
@@ -190,9 +201,8 @@ export default function AddProductPage() {
                             }}
                             endpoint={"imageUploader"}
                             onClientUploadComplete={(res) => {
-                                //setImgUrl( res[0].url)
+                                setImgUrl(res[0].url)
                                 toast.success("Изображение успешно загружено")
-                                console.log(res[0].url)
                             }}
                             onUploadError={(error: Error) => {
                                 console.log(error.message)
