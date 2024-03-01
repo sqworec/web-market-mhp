@@ -1,8 +1,7 @@
+"use client"
+
 import {Button} from "@/components/ui/button";
-import {addProductToCart} from "@/actions/add-product-to-cart";
 import {useEffect, useState, useTransition} from "react";
-import toast from "react-hot-toast";
-import {getCartProductByProductId} from "@/lib/services/cart-service";
 import {isAlreadyFavorite} from "@/lib/services/favorites-service";
 import {toggleFavorite} from "@/actions/toggle-favorite";
 
@@ -37,10 +36,10 @@ export const AddToFavoritesButton = ({userId, productId}: AddToCartButtonProps) 
     return (
         <Button
             disabled={isPending}
-    onClick={favoriteClickHandler}
-    className="w-full mt-5"
+            onClick={favoriteClickHandler}
+            className="w-full mt-5"
         >
-        В корзину
-    </Button>
-)
+            {favoriteLabel}
+        </Button>
+    )
 }

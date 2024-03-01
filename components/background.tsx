@@ -14,7 +14,7 @@ export default function Background() {
                 />
             </div>
             <div
-                className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-15rem)]"
+                className="absolute inset-x-0 top-[calc(100%+10rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%+12rem)]"
                 aria-hidden="true"
             >
                 <div

@@ -55,3 +55,15 @@ export const createProduct = async (title: string,
         return null
     }
 }
+
+export const deleteProduct = async (productId: string) => {
+    try {
+        await db.product.delete({
+            where: {
+                id: parseInt(productId, 10)
+            }
+        })
+    } catch (error) {
+        console.error("Error deleting product: ", error)
+    }
+}

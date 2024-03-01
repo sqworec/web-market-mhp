@@ -2,7 +2,7 @@
 
 import Container from "@/app/container";
 import {Input} from "@/components/ui/input";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useTransition} from "react";
 import {Separator} from "@/components/ui/separator";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
@@ -28,9 +28,11 @@ export default function AddProductPage() {
     const [energyValue, setEnergyValue] = useState("")
     const [storageConditions, setStorageConditions] = useState("")
     const [description, setDescription] = useState("")
-    const [imgUrl, setImgUrl] = useState("asdf")
+    const [imgUrl, setImgUrl] = useState("")
     const [price, setPrice] = useState("")
     const [category, setCategory] = useState("")
+
+    const [isPending, startTransition] = useTransition()
 
     const user = useCurrentUser()
     const router = useRouter()
@@ -41,29 +43,55 @@ export default function AddProductPage() {
 
     if (user?.role !== "ADMIN") return null
     const addHandler = () => {
-        createProduct(
-            title,
-            price,
-            category,
-            proteins,
-            fats,
-            carbohydrates,
-            energyValue,
-            storageConditions,
-            description,
-            imgUrl
-        ).then(() => {
-            toast.success("Продукт добавлен")
-            setTitle("")
-            setProteins("")
-            setFats("")
-            setCarbohydrates("")
-            setEnergyValue("")
-            setStorageConditions("")
-            setDescription("")
-            setImgUrl("")
-            setPrice("")
-            setCategory("")
+        startTransition(() => {
+            if (
+                (
+                    title ||
+                    price ||
+                    category ||
+                    proteins ||
+                    fats ||
+                    carbohydrates ||
+                    energyValue ||
+                    storageConditions ||
+                    description
+                ) === ""
+            ) {
+                toast.error("Заполните поля!")
+                return
+            }
+
+            if (imgUrl === "") {
+                toast.error("Загрузите изображение!")
+                return
+            }
+
+            createProduct(
+                title,
+                price,
+                category,
+                proteins,
+                fats,
+                carbohydrates,
+                energyValue,
+                storageConditions,
+                description,
+                imgUrl
+            ).then(() => {
+                toast.success("Продукт добавлен")
+                setTitle("")
+                setProteins("")
+                setFats("")
+                setCarbohydrates("")
+                setEnergyValue("")
+                setStorageConditions("")
+                setDescription("")
+                setImgUrl("")
+                setPrice("")
+                setCategory("")
+            }).catch(() => {
+                toast.error("Что-то пошло не так!")
+            })
         })
     }
 
@@ -83,9 +111,11 @@ export default function AddProductPage() {
                             Название
                         </div>
                         <Input
+                            disabled={isPending}
                             value={title}
                             onChange={(i) => {
-                                setTitle(i.target.value)
+                                if (parseFloat(i.target.value) < 0) setTitle("0")
+                                else setTitle(i.target.value)
                             }}
                             placeholder="Введите полное название продукта"
                         />
@@ -95,6 +125,7 @@ export default function AddProductPage() {
                             Категория
                         </div>
                         <Select
+                            disabled={isPending}
                             onValueChange={(i) => {
                                 setCategory(i.valueOf())
                             }}
@@ -123,10 +154,12 @@ export default function AddProductPage() {
                             Белки
                         </div>
                         <Input
+                            disabled={isPending}
                             type={"number"}
                             value={proteins}
                             onChange={(i) => {
-                                setProteins(i.target.value)
+                                if (parseFloat(i.target.value) < 0) setProteins("0")
+                                else setProteins(i.target.value)
                             }}
                             placeholder="Введите количество белков в продукте"
                         />
@@ -136,10 +169,12 @@ export default function AddProductPage() {
                             Жиры
                         </div>
                         <Input
+                            disabled={isPending}
                             type={"number"}
                             value={fats}
                             onChange={(i) => {
-                                setFats(i.target.value)
+                                if (parseFloat(i.target.value) < 0) setFats("0")
+                                else setFats(i.target.value)
                             }}
                             placeholder="Введите количество жиров в продукте"
                         />
@@ -149,10 +184,12 @@ export default function AddProductPage() {
                             Углеводы
                         </div>
                         <Input
+                            disabled={isPending}
                             type={"number"}
                             value={carbohydrates}
                             onChange={(i) => {
-                                setCarbohydrates(i.target.value)
+                                if (parseFloat(i.target.value) < 0) setCarbohydrates("0")
+                                else setCarbohydrates(i.target.value)
                             }}
                             placeholder="Введите количество углеводов в продукте"
                         />
@@ -162,10 +199,12 @@ export default function AddProductPage() {
                             Энергетическая ценность
                         </div>
                         <Input
+                            disabled={isPending}
                             type={"number"}
                             value={energyValue}
                             onChange={(i) => {
-                                setEnergyValue(i.target.value)
+                                if (parseFloat(i.target.value) < 0) setEnergyValue("0")
+                                else setEnergyValue(i.target.value)
                             }}
                             placeholder="Введите количество ккал в продукте"
                         />
@@ -176,6 +215,7 @@ export default function AddProductPage() {
                     </div>
                     <div className="my-5">
                         <Textarea
+                            disabled={isPending}
                             value={description}
                             onChange={(i) => {
                                 setDescription(i.target.value)
@@ -216,6 +256,7 @@ export default function AddProductPage() {
                     </div>
                     <div className="my-5">
                         <Textarea
+                            disabled={isPending}
                             value={storageConditions}
                             onChange={(i) => {
                                 setStorageConditions(i.target.value)
@@ -229,15 +270,18 @@ export default function AddProductPage() {
                             Цена
                         </div>
                         <Input
+                            disabled={isPending}
                             type={"number"}
                             value={price}
                             onChange={(i) => {
-                                setPrice(i.target.value)
+                                if (parseFloat(i.target.value) < 0) setPrice("0")
+                                else setPrice(i.target.value)
                             }}
                             placeholder="Укажите цену продукта"
                         />
                     </div>
                     <Button
+                        disabled={isPending}
                         className="w-full mt-5"
                         onClick={addHandler}
                     >

@@ -23,19 +23,9 @@ import {
 
 } from "@/components/ui/dropdown-menu"
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
 import {useCurrentUser} from "@/hooks/use-current-user";
 import {logout} from "@/actions/logout";
+import toast from "react-hot-toast";
 
 
 export const Navbar = () => {
@@ -43,13 +33,15 @@ export const Navbar = () => {
     let userAvatar = "LG"
     if (currentUser) userAvatar = (currentUser?.name![0]! + currentUser?.name![(currentUser?.name!).length - 1]!).toUpperCase()
     const handleLogOut = () => {
-        logout()
+        logout().then(() => {
+            toast.success("Вы вышли из аккаунта")
+        })
     }
 
     return (
         <nav
-            className="bg-white fixed top-0 w-full h-16 z-[49] px-2 border-b border-border/40 lg:px-4 flex justify-between items-center shadow-md">
-            <div className="items-center m-0 ml-5">
+            className="bg-white fixed top-0 w-full h-16 z-[49] border-b border-border/40 flex justify-between items-center shadow-md sm:px-10 lg:px-20">
+            <div className="items-center m-0">
                 <Logo/>
             </div>
             <div className="items-center">
@@ -104,7 +96,7 @@ export const Navbar = () => {
                     </NavigationMenuList>
                 </NavigationMenu>
             </div>
-            <div className="items-center mr-5">
+            <div className="items-center">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Avatar className="hover:bg-black">
@@ -113,27 +105,32 @@ export const Navbar = () => {
                         </Avatar>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56">
-                        <DropdownMenuLabel>Мой аккаунт</DropdownMenuLabel>
-                        <DropdownMenuSeparator/>
+                        {
+                            (currentUser) &&
+                            <>
+                                <DropdownMenuLabel>{currentUser?.name}</DropdownMenuLabel>
+                                <DropdownMenuSeparator/>
+                            </>
+                        }
                         {
                             (currentUser) &&
                             <>
                                 <DropdownMenuGroup>
-                                    <DropdownMenuItem>
-                                        <Link href={"/user/profile"}>
+                                    <Link href={"/user/profile"}>
+                                        <DropdownMenuItem>
                                             Профиль
-                                        </Link>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <Link href={"/user/favorites"}>
+                                        </DropdownMenuItem>
+                                    </Link>
+                                    <Link href={"/user/favorites"}>
+                                        <DropdownMenuItem>
                                             Избранное
-                                        </Link>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <Link href={"/user/cart"}>
+                                        </DropdownMenuItem>
+                                    </Link>
+                                    <Link href={"/user/cart"}>
+                                        <DropdownMenuItem>
                                             Корзина
-                                        </Link>
-                                    </DropdownMenuItem>
+                                        </DropdownMenuItem>
+                                    </Link>
                                 </DropdownMenuGroup>
                                 <DropdownMenuSeparator/>
                             </>
@@ -141,11 +138,11 @@ export const Navbar = () => {
 
                         {
                             (!currentUser) &&
-                            <DropdownMenuItem>
-                                <Link href={"/auth/login"}>
+                            <Link href={"/auth/login"}>
+                                <DropdownMenuItem>
                                     Авторизация
-                                </Link>
-                            </DropdownMenuItem>
+                                </DropdownMenuItem>
+                            </Link>
                         }
 
                         {

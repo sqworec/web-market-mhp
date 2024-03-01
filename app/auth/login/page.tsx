@@ -120,7 +120,7 @@ export default function LoginPage() {
                         </form>
                     </Form>
                 </CardContent>
-                <p className="flex justify-around text-sm text-gray-500 hover:cursor-pointer hover:text-black"
+                <p className="flex justify-around text-sm text-gray-500 hover:cursor-pointer hover:text-black transition-all duration-150"
                    onClick={() => {
                        router.push("/auth/register")
                    }}>Зарегистрироваться

@@ -10,7 +10,7 @@ interface ProductCardProps {
 export default function ProductCard({product}: ProductCardProps) {
     return (
         <>
-            <Card className="bg-white shadow-md border-none rounded-xl h-[250px]" shadow="sm" isPressable>
+            <Card className="bg-white shadow-sm border-none rounded-xl h-[250px]" shadow="sm" isPressable>
                 <CardBody className="overflow-visible p-0">
                     <Link href={`/products/${product.id}`}>
                         <Image
