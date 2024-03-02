@@ -20,6 +20,7 @@ import {UploadButton} from "@/utils/uploadthing";
 import {useCurrentUser} from "@/hooks/use-current-user";
 import {useRouter} from "next/navigation";
 import {Product} from "@prisma/client";
+import {revalidatePath} from "next/cache";
 
 interface UpdateProductFormProps {
     product: Product

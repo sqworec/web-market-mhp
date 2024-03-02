@@ -6,6 +6,7 @@ import {getProductById} from "@/lib/services/product-service";
 import DeleteProductButton from "@/app/products/_components/delete-product-button";
 import {Separator} from "@/components/ui/separator";
 import UpdateProductButton from "@/app/products/_components/update-product-button";
+import {useRouter} from "next/navigation";
 
 export default async function ProductPage({params}: { params: { id: string } }) {
     const user = await getCurrentUser()
@@ -14,11 +15,11 @@ export default async function ProductPage({params}: { params: { id: string } }) 
     return (
         <div className="my-20">
             <Container>
-                <div className="w-full h-full rounded-xl drop-shadow-md bg-white flex flex-col">
+                <div className="w-[70%] h-full rounded-xl drop-shadow-md bg-white flex flex-col mx-auto">
                     <div
-                        className="flex flex-row"
+                        className="flex flex-col"
                     >
-                        <div className="relative w-[50%] h-[52vh]">
+                        <div className="relative w-[100%] h-[80vh]">
                             <img
                                 className="
                                     absolute
@@ -39,43 +40,43 @@ export default async function ProductPage({params}: { params: { id: string } }) 
                                     flex-col
                                     mt-[2vh]
                                     ml-[2vw]
-                                    w-1/2
+                                    w-[93%]
                                 "
                         >
-                            <div className="xl:text-2xl md:text-xl font-bold">
+                            <div className="text-2xl font-bold">
                                 {product?.title}
                             </div>
-                            <div className="xl:text-lg md:text-sm text-neutral-500">
+                            <div className="text-sm text-neutral-500">
                                 {product?.category}
                             </div>
                             <Separator className="my-[2vh]"/>
-                            <div className="xl:text-xl md:text-lg font-bold mb-[1vh]">
+                            <div className="text-base font-bold mb-[1vh]">
                                 Пищевая ценность (100г)
                             </div>
-                            <div className="text-neutral-500 xl:text-lg md:text-sm flex flex-col">
+                            <div className="text-neutral-500 text-sm flex flex-col">
                                 <div>Белки: {product?.proteins} г</div>
                                 <div>Жиры: {product?.fats} г</div>
                                 <div>Углеводы: {product?.carbohydrates} г</div>
                                 <div>Энергетическая ценность: {product?.energyValue} ккал</div>
                             </div>
                             <Separator className="my-[2vh]"/>
-                            <div className="xl:text-xl md:text-lg font-bold mb-[1vh]">
+                            <div className="text-base font-bold mb-[1vh]">
                                 Описание:
                             </div>
-                            <div className="text-neutral-500 xl:text-lg md:text-sm flex flex-col">
+                            <div className="text-neutral-500 text-sm flex flex-col text-justify pr-[2vw]">
                                 {product?.description}
                             </div>
                             <Separator className="my-[2vh]"/>
-                            <div className="xl:text-xl md:text-lg font-bold mb-[1vh]">
+                            <div className="text-base font-bold mb-[1vh]">
                                 Условия хранения:
                             </div>
-                            <div className="text-neutral-500 xl:text-lg md:text-sm flex flex-col">
+                            <div className="text-neutral-500 text-sm flex flex-col text-justify pr-[2vw]">
                                 {product?.storageConditions}
                             </div>
                             <Separator className="my-[2vh]"/>
                         </div>
                     </div>
-                    <div className="px-[5vw] pb-[5vh] mt-[2vh]">
+                    <div className="px-[2vw] mb-[5vh] mt-[2vh]">
                         <AddToCartForm
                             userId={user?.id!}
                             productId={params?.id}

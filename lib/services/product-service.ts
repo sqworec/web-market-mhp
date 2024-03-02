@@ -1,6 +1,7 @@
 "use server"
 
 import {db} from "@/lib/db";
+import {revalidatePath} from "next/cache";
 
 export const getAllProducts = async () => {
     try {
@@ -85,6 +86,8 @@ export const updateProduct = async (id: string,
                 imgUrl
             }
         })
+
+        revalidatePath(`/products/${id}`)
     } catch (error) {
         console.error("Error updating product: ", error)
         return null
