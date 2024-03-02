@@ -5,6 +5,7 @@ import {getCurrentUser} from "@/lib/services/get-current-user";
 import {getProductById} from "@/lib/services/product-service";
 import DeleteProductButton from "@/app/products/_components/delete-product-button";
 import {Separator} from "@/components/ui/separator";
+import UpdateProductButton from "@/app/products/_components/update-product-button";
 
 export default async function ProductPage({params}: { params: { id: string } }) {
     const user = await getCurrentUser()
@@ -77,18 +78,23 @@ export default async function ProductPage({params}: { params: { id: string } }) 
                     <div className="px-[5vw] pb-[5vh] mt-[2vh]">
                         <AddToCartForm
                             userId={user?.id!}
-                            productId={params.id}
+                            productId={params?.id}
                         />
                         <AddToFavoritesButton
                             userId={user?.id!}
-                            productId={params.id}
+                            productId={params?.id}
                         />
 
                         {
                             (user?.role === "ADMIN") &&
-                            <DeleteProductButton
-                                productId={params.id}
-                            />
+                            <>
+                                <UpdateProductButton
+                                    productId={params?.id}
+                                />
+                                <DeleteProductButton
+                                    productId={params?.id}
+                                />
+                            </>
                         }
                     </div>
                 </div>

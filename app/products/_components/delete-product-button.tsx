@@ -20,7 +20,7 @@ export default function DeleteProductButton({productId}: DeleteProductButtonProp
 
     return (
         <Button
-            className="w-full mt-5"
+            className="w-full mt-5 bg-red-500 hover:bg-red-700"
             onClick={deleteProductHandler}
         >
             Удалить продукт
