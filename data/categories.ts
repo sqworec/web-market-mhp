@@ -2,22 +2,22 @@ const categories = [
     {
         title: 'Хлеб',
         description: 'Свежий хлеб',
-        href: '/products/hlep',
+        searchParam: 'Хлеб',
     },
     {
         title: 'Батон',
         description: 'Ароматный батон',
-        href: '/products/baton',
+        searchParam: 'Батон',
     },
     {
         title: 'Сухари',
         description: 'Сухари как сухари',
-        href: '/products/suhari',
+        searchParam: 'Сухари',
     },
     {
         title: 'Торты',
         description: 'Наполеон тоже не сразу стал наполеоном',
-        href: '/products/torti',
+        searchParam: 'Торты',
     },
 ]
 

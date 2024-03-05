@@ -15,7 +15,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import categories from "@/components/categories";
+import categories from "@/data/categories";
 import {UploadButton} from "@/utils/uploadthing";
 import {useCurrentUser} from "@/hooks/use-current-user";
 import {useRouter} from "next/navigation";

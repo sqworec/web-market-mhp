@@ -9,7 +9,7 @@ import {
 import {navigationMenuTriggerStyle} from "@/components/ui/navigation-menu"
 import Link from "next/link";
 import * as React from "react";
-import categories from "@/components/categories";
+import categories from "@/data/categories";
 import {cn} from "@/lib/utils";
 import Logo from "@/app/(home)/_components/navbar/logo";
 import {
@@ -26,10 +26,29 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {useCurrentUser} from "@/hooks/use-current-user";
 import {logout} from "@/actions/logout";
 import toast from "react-hot-toast";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import {useCallback, useState} from "react";
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
+import {SearchIcon} from "@nextui-org/shared-icons";
 
 
 export const Navbar = () => {
     const currentUser = useCurrentUser()
+    const [searchInput, setSearchInput] = useState("")
+
+    const router = useRouter()
+    const searchParams = useSearchParams()
+
+    const createQueryString = useCallback(
+        (name: string, value: string) => {
+            const params = new URLSearchParams(searchParams.toString())
+            params.set(name, value)
+            return params.toString()
+        },
+        [searchParams]
+    )
+
     let userAvatar = "LG"
     if (currentUser) userAvatar = (currentUser?.name![0]! + currentUser?.name![(currentUser?.name!).length - 1]!).toUpperCase()
     const handleLogOut = () => {
@@ -37,6 +56,7 @@ export const Navbar = () => {
             toast.success("Вы вышли из аккаунта")
         })
     }
+
 
     return (
         <nav
@@ -52,6 +72,23 @@ export const Navbar = () => {
                                 <NavigationMenuTrigger>Продукция</NavigationMenuTrigger>
                             </Link>
                             <NavigationMenuContent>
+                                <div className="flex flex-row justify-between w-[94.5%] mt-4 ml-4">
+                                    <Input
+                                        className="w-[90%]"
+                                        placeholder="Название продукции..."
+                                        value={searchInput}
+                                        onChange={(e) => {
+                                            setSearchInput(e.target.value)
+                                        }}
+                                    />
+                                    <Button
+                                        onClick={() => {
+                                            router.push("/products?" + createQueryString("title", searchInput))
+                                        }}
+                                    >
+                                        <SearchIcon/>
+                                    </Button>
+                                </div>
                                 <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                                     <ListItem
                                         key={"allProducts"}
@@ -64,7 +101,9 @@ export const Navbar = () => {
                                         <ListItem
                                             key={component.title}
                                             title={component.title}
-                                            href={component.href}
+                                            onClick={() => {
+                                                router.push("/products?" + createQueryString("category", component.searchParam))
+                                            }}
                                         >
                                             {component.description}
                                         </ListItem>

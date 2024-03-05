@@ -18,7 +18,7 @@ export default function ProductCard({product}: ProductCardProps) {
                             src={product.imgUrl}
                             alt={product.title}
                             width="100%"
-                            className="w-full object-cover h-[180px] rounded-sm"
+                            className="w-full object-cover h-[180px]"
                         />
                     </Link>
                     <p className="text-[14px] pt-3">{product.title}</p>

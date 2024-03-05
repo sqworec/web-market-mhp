@@ -7,10 +7,13 @@ import DeleteProductButton from "@/app/products/_components/delete-product-butto
 import {Separator} from "@/components/ui/separator";
 import UpdateProductButton from "@/app/products/_components/update-product-button";
 import {useRouter} from "next/navigation";
+import NoResults from "@/app/products/_components/no-results";
 
 export default async function ProductPage({params}: { params: { id: string } }) {
     const user = await getCurrentUser()
     const product = await getProductById(params.id)
+
+    if(!product) return <NoResults/>
 
     return (
         <div className="my-20">
