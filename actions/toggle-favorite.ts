@@ -4,6 +4,7 @@ import {
     removeProductFromFavorite
 } from "@/lib/services/favorites-service";
 import toast from "react-hot-toast";
+import {revalidatePath} from "next/cache";
 
 export const toggleFavorite = async (userId: string, productId: string) => {
     try {
@@ -11,11 +12,12 @@ export const toggleFavorite = async (userId: string, productId: string) => {
 
         if (!isUserFavorite) {
             await addProductToFavorite(userId, productId)
-            toast.success("добавлено")
+            toast.success("Добавлено в избранное")
         } else {
             await removeProductFromFavorite(userId, productId)
-            toast.success("удалено")
+            toast.success("Удалено из избранного")
         }
+
     } catch (error) {
         toast.error("Error togging favorite: " + error)
         return null

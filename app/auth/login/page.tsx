@@ -53,11 +53,11 @@ export default function LoginPage() {
                 .then((data) => {
                     if (data !== undefined) {
                         setError(data.error)
-                        setSuccess(data.error)
                     }
                 })
         })
     }
+
     return (
         <div className="flex justify-around mt-[5%]">
             <Card className="w-[550px] p-20 rounded-2xl border-none">

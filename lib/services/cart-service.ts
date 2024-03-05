@@ -2,13 +2,13 @@
 
 import {db} from "@/lib/db";
 
-export const createNewProductInCart = async (userId: string, productId: string, amount: string) => {
+export const createNewProductInCart = async (userId: string, productId: string, quantity: string) => {
     try {
         await db.cart.create({
             data: {
                 userId,
                 productId: parseInt(productId, 10),
-                amount: parseInt(amount, 10),
+                quantity: parseInt(quantity, 10),
             },
         })
     } catch (error) {
@@ -58,7 +58,7 @@ export const getCartProductByProductId = async (productId: string, userId: strin
     }
 }
 
-export const updateCartProductByProductId = async (userId: string, productId: number, updAmount: string) => {
+export const updateCartProductByProductId = async (userId: string, productId: number, updQuantity: string) => {
     try {
         return await db.cart.update({
             where: {
@@ -68,7 +68,7 @@ export const updateCartProductByProductId = async (userId: string, productId: nu
                 },
             },
             data: {
-                amount: parseInt(updAmount, 10)
+                quantity: parseInt(updQuantity, 10)
             }
         })
 

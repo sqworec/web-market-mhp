@@ -13,7 +13,7 @@ export default async function FavoriteProductCard({favoriteProduct, userId}: Fav
     const product = await getProductById(favoriteProduct.productId.toString())
 
     return (
-        <div className="relative w-full rounded-xl drop-shadow-md bg-white mb-5 p-0 z-10">
+        <div className="relative w-full rounded-xl drop-shadow-sm hover:drop-shadow-xl transition-all duration-300 bg-white mb-5 p-0 z-10">
             <div className="relative w-full h-full rounded-xl overflow-hidden">
                 <img
                     src={product?.imgUrl}
@@ -37,29 +37,5 @@ export default async function FavoriteProductCard({favoriteProduct, userId}: Fav
                 </div>
             </div>
         </div>
-
-        // <Link href={`/products/${product?.id}`}>
-        //     <div
-        //         className="relative w-full h-[100px] rounded-xl drop-shadow-md bg-white mb-5 p-0"
-        //     >
-        //         <img
-        //             src={product?.imgUrl}
-        //             alt={product?.title}
-        //             className="opacity-30 absolute w-full h-full object-cover rounded-xl"
-        //         />
-        //
-        //         <div
-        //             className="flex h-full justify-between items-center py-5 px-10"
-        //         >
-        //             <div className="font-bold">
-        //                 {product?.title}
-        //             </div>
-        //             <DeleteFromFavoriteButton
-        //                 userId={userId}
-        //                 productId={product?.id!.toString()!}
-        //             />
-        //         </div>
-        //     </div>
-        // </Link>
     )
 }

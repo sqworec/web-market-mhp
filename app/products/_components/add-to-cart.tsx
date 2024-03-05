@@ -13,14 +13,14 @@ interface AddToCartButtonProps {
 }
 
 export const AddToCartForm = ({userId, productId}: AddToCartButtonProps) => {
-    const [amount, setAmount] = useState("1")
+    const [quantity, setQuantity] = useState("1")
     const [isPending, startTransition] = useTransition()
 
     const cartClickHandle = () => {
         startTransition(() => {
-            addProductToCart(userId, parseInt(productId), amount)
+            addProductToCart(userId, parseInt(productId), quantity)
 
-            if (amount === "0") toast.success("Удалено из корзины")
+            if (quantity === "0") toast.success("Удалено из корзины")
             else toast.success("Добавлено в карзину")
 
         })
@@ -28,8 +28,8 @@ export const AddToCartForm = ({userId, productId}: AddToCartButtonProps) => {
 
     useEffect(() => {
         getCartProductByProductId(productId, userId).then(i => {
-            const isExisting = i?.amount!
-            if (isExisting) setAmount(i?.amount!.toString())
+            const isExisting = i?.quantity!
+            if (isExisting) setQuantity(i?.quantity!.toString())
         })
     }, [productId, userId])
 
@@ -44,10 +44,10 @@ export const AddToCartForm = ({userId, productId}: AddToCartButtonProps) => {
                     className="border-none text-center xl:w-[7vw] sm:w-[15vw] focus:outline-none font-bold"
                     disabled={isPending}
                     type="number"
-                    value={amount}
+                    value={quantity}
                     onChange={(i) => {
-                        if (parseInt(i.target.value) < 0) setAmount("0")
-                        else setAmount(i.target.value)
+                        if (parseInt(i.target.value) < 0) setQuantity("0")
+                        else setQuantity(i.target.value)
                     }}
                 />
             </div>

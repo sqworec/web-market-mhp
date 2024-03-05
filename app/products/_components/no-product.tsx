@@ -3,20 +3,20 @@
 import {Button} from "@/components/ui/button";
 import {usePathname, useRouter} from "next/navigation";
 
-export default function NoResults() {
+export default function NoProduct() {
     const router = useRouter()
 
     return (
         <div className="flex justify-center items-center flex-col mt-[30vh] w-full h-full">
             <div className="text-neutral-500 text-2xl mb-5">
-                Похоже, по данному запросу продукции не найдено...
+                Выбранного продукта не существует :(
             </div>
             <Button
                 onClick={() => {
                     router.push("/products")
                 }}
             >
-                Сбросить фильтры
+                На главную
             </Button>
         </div>
     )

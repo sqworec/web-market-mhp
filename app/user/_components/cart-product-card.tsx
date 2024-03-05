@@ -30,8 +30,8 @@ export default async function CartProductCard({cartProduct, userId}: CartProduct
                     </div>
                     <div className="flex justify-between items-center">
                         <div className="flex flex-col">
-                            <div>{cartProduct.amount} шт.</div>
-                            <div>{Math.round(cartProduct?.amount * product?.price! * 100) / 100} BYN</div>
+                            <div>{cartProduct.quantity} шт.</div>
+                            <div>{Math.round(cartProduct?.quantity * product?.price! * 100) / 100} BYN</div>
                         </div>
                         <DeleteFromCartButton
                             userId={userId}
