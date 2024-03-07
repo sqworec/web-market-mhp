@@ -26,8 +26,8 @@ export default async function ProductPage({params}: { params: { id: string } }) 
                             <img
                                 className="
                                     absolute
-                                    rounded-xl
                                     object-cover
+                                    rounded-t-xl
                                     w-full
                                     h-full
                                     top-0

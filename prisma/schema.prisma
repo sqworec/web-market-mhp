@@ -26,6 +26,7 @@ model User {
   accounts Account[]
   Cart     Cart[]
   Favorite Favorite[]
+  Order    Order[]
 }
 
 model Account {
@@ -61,25 +62,51 @@ model Product {
   imgUrl            String
   Cart              Cart[]
   Favorite          Favorite[]
+  orderId           Int?
 }
 
 model Cart {
-  id        Int     @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   userId    String
   productId Int
   quantity  Int
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@unique([userId, productId])
 }
 
 model Favorite {
-  id        Int     @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   userId    String
   productId Int
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@unique([userId, productId])
+}
+
+model OrderItem {
+  id         Int   @id @default(autoincrement())
+  orderId    Int
+  productId  Int
+  quantity   Int
+  price      Float
+  totalPrice Float
+
+  order Order @relation(fields: [orderId], references: [id])
+}
+
+model Order {
+  id                Int         @id @default(autoincrement())
+  userId            String
+  organization      String
+  payerAndAddress   String
+  bankAccountNumber String
+  date              DateTime
+  OrderItem         OrderItem[]
+
+  User User @relation(fields: [userId], references: [id])
 }

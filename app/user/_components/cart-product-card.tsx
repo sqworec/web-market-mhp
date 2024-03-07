@@ -13,7 +13,7 @@ export default async function CartProductCard({cartProduct, userId}: CartProduct
     const product = await getProductById(cartProduct?.productId!.toString()!);
 
     return (
-        <div className="relative w-full rounded-xl drop-shadow-md bg-white mb-5 p-0 z-10">
+        <div className="hover:drop-shadow-xl transition-all duration-300 relative w-full rounded-xl drop-shadow-sm bg-white mb-5 p-0 z-10">
             <div className="relative w-full h-full rounded-xl overflow-hidden">
                 <img
                     src={product?.imgUrl}

@@ -105,3 +105,19 @@ export const deleteProduct = async (productId: string) => {
         console.error("Error deleting product: ", error)
     }
 }
+
+export const getProductsFromCartByUserId = async (userId: string) => {
+    try {
+        return await db.product.findMany({
+            include: {
+                Cart: {
+                    where: {
+                        userId,
+                    },
+                },
+            },
+        })
+    } catch (error) {
+        console.log("Error getting products with cart info: ", error)
+    }
+}

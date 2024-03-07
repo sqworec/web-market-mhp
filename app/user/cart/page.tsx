@@ -27,25 +27,21 @@ export default async function CartPage() {
                     </div>
                 }
                 {cartProducts?.map((cartProduct) => (
-                    <>
-                        <CartProductCard
-                            userId={currentUser?.id!}
-                            cartProduct={cartProduct}
-                            key={cartProduct.id}
-                        />
-                    </>
+                    <CartProductCard
+                        userId={currentUser?.id!}
+                        cartProduct={cartProduct}
+                        key={cartProduct.id}
+                    />
                 ))
                 }
 
                 {
                     (cartProducts?.length! > 0) &&
-                    <div className="flex flex-col justify-center items-center">
-                        <OrderButton/>
-                        <div
-                            className="text-xl"
-                        >
-                            Итоговая сумма: {totalAmount}
+                    <div className="flex flex-row justify-between items-center right-full h-full px-10">
+                        <div className="text-lg h-full">
+                                Итоговая сумма: {totalAmount} BYN
                         </div>
+                        <OrderButton/>
                     </div>
                 }
             </Container>

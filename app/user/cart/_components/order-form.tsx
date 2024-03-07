@@ -18,7 +18,8 @@ import {
 import categories from "@/data/categories";
 import {UploadButton} from "@/utils/uploadthing";
 import {useCurrentUser} from "@/hooks/use-current-user";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
+import {createOrder} from "@/lib/services/order-service";
 
 export default function OrderForm() {
     const [organization, setOrganization] = useState("")
@@ -29,13 +30,18 @@ export default function OrderForm() {
 
     const user = useCurrentUser()
     const router = useRouter()
+    const pathname = usePathname()
 
-    const updateHandler = () => {
+    const makeInvoiceHandler = () => {
         startTransition(() => {
             if ((organization || payerAndAddress || bankAccountNumber) === "") {
                 toast.error("Заполните поля!")
                 return
             }
+
+            createOrder(user?.id!, organization, payerAndAddress, bankAccountNumber)
+
+            router.push(pathname + `/${}/invoice`)
 
         })
     }
@@ -93,9 +99,9 @@ export default function OrderForm() {
                     <Button
                         disabled={isPending}
                         className="w-full mt-5"
-                        onClick={updateHandler}
+                        onClick={makeInvoiceHandler}
                     >
-                        Изменить
+                        Далее
                     </Button>
                 </div>
             </div>
