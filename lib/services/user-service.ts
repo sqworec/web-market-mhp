@@ -1,12 +1,11 @@
-import {db} from "@/lib/db";
-import {auth} from "@/auth";
+"use server"
 
+import {db} from "@/lib/db";
 
 export const getUserByEmail = async (email: string) => {
     try {
-        const user = await db.user.findUnique({where: {email}});
+        return  await db.user.findUnique({where: {email}});
 
-        return user;
     } catch {
         return null;
     }
@@ -14,12 +13,27 @@ export const getUserByEmail = async (email: string) => {
 
 export const getUserById = async (id: string) => {
     try {
-        const user = await db.user.findUnique({where: {id}});
-
-        return user;
+        return await db.user.findUnique({where: {id}});
     } catch {
         return null;
     }
 };
+
+export const updateUserById = async (id: string, organization: string, payerAndAddress: string, bankAccountNumber: string) => {
+    try {
+        await db.user.update({
+            data: {
+                organization,
+                payerAndAddress,
+                bankAccountNumber
+            },
+            where: {
+                id
+            }
+        })
+    } catch (error) {
+        console.error("Error updating user: ", error)
+    }
+}
 
 

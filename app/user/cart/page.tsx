@@ -2,9 +2,11 @@ import Container from "@/app/container";
 import {getCartProductsByUserId} from "@/lib/services/cart-service";
 import {getCurrentUser} from "@/lib/services/get-current-user";
 import CartProductCard from "@/app/user/_components/cart-product-card";
-import OrderButton from "@/app/user/cart/_components/order-button";
-import {Product} from "@prisma/client";
 import {getProductById} from "@/lib/services/product-service";
+import {Button} from "@/components/ui/button";
+import {Order} from "@prisma/client";
+import {createOrder} from "@/lib/services/order-service";
+import OrderButton from "@/app/user/cart/_components/order-button";
 
 export default async function CartPage() {
     const currentUser = await getCurrentUser()
@@ -15,6 +17,11 @@ export default async function CartPage() {
     for (const cartProduct of cartProducts!) {
         const product = await getProductById(cartProduct?.productId!.toString());
         totalAmount += product?.price! * cartProduct.quantity;
+    }
+
+    let order: Order | null
+    const orderHandler = async () => {
+        order = await createOrder(currentUser?.id!, totalAmount.toString())
     }
 
     return (
@@ -41,7 +48,9 @@ export default async function CartPage() {
                         <div className="text-lg h-full">
                                 Итоговая сумма: {totalAmount} BYN
                         </div>
-                        <OrderButton/>
+                        <OrderButton
+                            totalAmount={totalAmount.toString()}
+                        />
                     </div>
                 }
             </Container>

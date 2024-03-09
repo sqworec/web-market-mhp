@@ -17,12 +17,16 @@ enum UserRole {
 }
 
 model User {
-  id       String     @id @default(cuid())
-  name     String?
-  email    String?    @unique
-  image    String?
-  password String
-  role     UserRole   @default(USER)
+  id                String   @id @default(cuid())
+  name              String?
+  email             String?  @unique
+  image             String?
+  organization      String?
+  payerAndAddress   String?
+  bankAccountNumber String?
+  password          String
+  role              UserRole @default(USER)
+
   accounts Account[]
   Cart     Cart[]
   Favorite Favorite[]
@@ -49,7 +53,7 @@ model Account {
 }
 
 model Product {
-  id                Int        @id @default(autoincrement())
+  id                Int    @id @default(autoincrement())
   title             String
   price             Float
   category          String
@@ -60,9 +64,9 @@ model Product {
   storageConditions String
   description       String
   imgUrl            String
-  Cart              Cart[]
-  Favorite          Favorite[]
-  orderId           Int?
+
+  Cart     Cart[]
+  Favorite Favorite[]
 }
 
 model Cart {
@@ -100,13 +104,11 @@ model OrderItem {
 }
 
 model Order {
-  id                Int         @id @default(autoincrement())
-  userId            String
-  organization      String
-  payerAndAddress   String
-  bankAccountNumber String
-  date              DateTime
-  OrderItem         OrderItem[]
+  id          Int         @id @default(autoincrement())
+  userId      String
+  date        DateTime    @default(now())
+  totalAmount Float
+  OrderItem   OrderItem[]
 
   User User @relation(fields: [userId], references: [id])
 }

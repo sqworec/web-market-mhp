@@ -108,16 +108,53 @@ export const deleteProduct = async (productId: string) => {
 
 export const getProductsFromCartByUserId = async (userId: string) => {
     try {
+        const cartProducts = await db.cart.findMany({
+            where: {
+                userId: userId,
+            },
+            select: {
+                productId: true,
+            },
+        });
+
+        const productIds = cartProducts.map((cartProduct) => cartProduct.productId);
+
         return await db.product.findMany({
-            include: {
-                Cart: {
-                    where: {
-                        userId,
-                    },
+            where: {
+                id: {
+                    in: productIds,
                 },
             },
-        })
+        });
+
     } catch (error) {
-        console.log("Error getting products with cart info: ", error)
+        throw new Error(`Error retrieving products: ${error}`);
+    }
+}
+
+export const getProductsByOrderId = async (orderId: number) => {
+    try {
+        const orderItems = await db.orderItem.findMany({
+            where: {
+                orderId: orderId,
+            },
+            select: {
+                productId: true,
+            },
+        });
+
+        const productIds = orderItems.map((orderItem) => orderItem.productId);
+
+        const products = await db.product.findMany({
+            where: {
+                id: {
+                    in: productIds,
+                },
+            },
+        });
+
+        return products;
+    } catch (error) {
+        throw new Error(`Error retrieving products by order ID: ${error}`);
     }
 }

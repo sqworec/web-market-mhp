@@ -76,3 +76,11 @@ export const updateCartProductByProductId = async (userId: string, productId: nu
         console.error("Error updating cart product:", error)
     }
 }
+
+export const clearCart = async () => {
+    try {
+        await db.cart.deleteMany()
+    } catch (error) {
+        console.error("Error clearing cart: ", error)
+    }
+}

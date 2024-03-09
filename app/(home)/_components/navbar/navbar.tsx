@@ -170,6 +170,11 @@ export const Navbar = () => {
                                             Корзина
                                         </DropdownMenuItem>
                                     </Link>
+                                    <Link href={"/user/orders"}>
+                                        <DropdownMenuItem>
+                                            Заказы
+                                        </DropdownMenuItem>
+                                    </Link>
                                 </DropdownMenuGroup>
                                 <DropdownMenuSeparator/>
                             </>

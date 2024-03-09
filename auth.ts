@@ -22,6 +22,18 @@ export const {
                 session.user.role = token.role as UserRole
             }
 
+            if (token.organization && session.user) {
+                session.user.organization = token.organization as string
+            }
+
+            if (token.payerAndAddress && session.user) {
+                session.user.payerAndAddress = token.payerAndAddress as string
+            }
+
+            if (token.bankAccountNumber && session.user) {
+                session.user.bankAccountNumber = token.bankAccountNumber as string
+            }
+
             return session
         },
         async jwt({token}) {
@@ -32,6 +44,9 @@ export const {
             if (!existingUser) return token
 
             token.role = existingUser.role
+            token.organization = existingUser.organization
+            token.payerAndAddress = existingUser.payerAndAddress
+            token.bankAccountNumber = existingUser.bankAccountNumber
 
             return token
         }

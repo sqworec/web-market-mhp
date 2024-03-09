@@ -1,22 +1,47 @@
+"use server"
+
 import {db} from "@/lib/db";
 
-export const createOrder = async (userId: string, organization: string, payerAndAddress: string, bankAccountNumber: string) => {
+export const createOrder = async (userId: string, totalAmount: string) => {
     try {
-        await db.order.create({
+        return await db.order.create({
             data: {
                 userId,
-                organization,
-                payerAndAddress,
-                bankAccountNumber,
+                totalAmount: parseFloat(totalAmount),
                 date: new Date(),
             }
         })
     } catch (error) {
         console.error("Error creating order: ", error)
+        return null
     }
 }
 
-export const crateOrderItem = async (orderId: string, productId: string, quantity: string, price: string, totalPrice: string) => {
+export const getOrdersByUserId = async (userId: string) => {
+    try {
+        return await db.order.findMany({
+            where: {
+                userId
+            }
+        })
+    } catch (error) {
+        console.error("Error getting orders: ", error)
+    }
+}
+
+export const getOrderById = async (id: string) => {
+    try {
+        return await db.order.findUnique({
+            where: {
+                id: parseInt(id, 10)
+            }
+        })
+    } catch (error) {
+        console.error("Error getting order: ", error)
+    }
+}
+
+export const createOrderItem = async (orderId: string, productId: string, quantity: string, price: string, totalPrice: string) => {
     try {
         await db.orderItem.create({
             data: {
@@ -32,14 +57,16 @@ export const crateOrderItem = async (orderId: string, productId: string, quantit
     }
 }
 
-export const getOrdersByUserId = async (userId: string) => {
+export const getOrderItemsByOrderId = async (orderId: string) => {
     try {
-        return await db.order.findMany({
+        return await db.orderItem.findMany({
             where: {
-                userId
+                orderId: parseInt(orderId, 10)
             }
         })
     } catch (error) {
-        console.log("Error getting order: ", error)
+        console.error("Error getting order items: ", error)
     }
 }
+
+
