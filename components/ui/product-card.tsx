@@ -10,8 +10,8 @@ interface ProductCardProps {
 export default function ProductCard({product}: ProductCardProps) {
     return (
         <>
-            <Card className="bg-white shadow-sm border-none rounded-xl h-[250px] hover:drop-shadow-2xl hover:-translate-y-2 hover:scale-110 transition-all duration-300 " isPressable>
-                <CardBody className="overflow-visible p-0">
+            <Card className="bg-white shadow-sm border-none rounded-xl h-[250px] hover:drop-shadow-2xl hover:-translate-y-2 hover:scale-110 transition-all duration-300 ">
+                <CardBody className="overflow-visible p-0 text-center">
                     <Link href={`/products/${product.id}`}>
                         <Image
                             shadow="sm"

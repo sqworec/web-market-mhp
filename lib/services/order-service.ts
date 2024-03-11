@@ -1,6 +1,7 @@
 "use server"
 
 import {db} from "@/lib/db";
+import {Order} from "@prisma/client";
 
 export const createOrder = async (userId: string, totalAmount: string) => {
     try {
@@ -69,4 +70,47 @@ export const getOrderItemsByOrderId = async (orderId: string) => {
     }
 }
 
+export const createOrderWithItems = async (
+    userId: string,
+    totalAmount: string,
+    items: {
+        productId: string;
+        quantity: string;
+        price: string;
+    }[]
+) => {
+    let createdOrder: Order;
+    let createdItems;
 
+    try {
+        await db.$transaction(async (tx) => {
+            createdOrder = await tx.order.create({
+                data: {
+                    userId,
+                    totalAmount: parseFloat(totalAmount),
+                    date: new Date(),
+                },
+            });
+
+            createdItems = await Promise.all(
+                items.map(async (item) => {
+                    const totalPrice = parseInt(item.quantity, 10) * parseFloat(item.price);
+                    return tx.orderItem.create({
+                        data: {
+                            orderId: createdOrder.id,
+                            productId: parseInt(item.productId, 10),
+                            quantity: parseInt(item.quantity, 10),
+                            price: parseFloat(item.price),
+                            totalPrice,
+                        },
+                    });
+                })
+            );
+            return createdOrder
+        });
+    } catch (error) {
+        console.error('Error creating order with items: ', error);
+        throw error;
+    }
+
+};

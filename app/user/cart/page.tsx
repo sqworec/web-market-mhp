@@ -2,8 +2,7 @@ import Container from "@/app/container";
 import {getCartProductsByUserId} from "@/lib/services/cart-service";
 import {getCurrentUser} from "@/lib/services/get-current-user";
 import CartProductCard from "@/app/user/_components/cart-product-card";
-import {getProductById} from "@/lib/services/product-service";
-import {Button} from "@/components/ui/button";
+import {calculateCartTotal, getProductById} from "@/lib/services/product-service";
 import {Order} from "@prisma/client";
 import {createOrder} from "@/lib/services/order-service";
 import OrderButton from "@/app/user/cart/_components/order-button";
@@ -11,13 +10,7 @@ import OrderButton from "@/app/user/cart/_components/order-button";
 export default async function CartPage() {
     const currentUser = await getCurrentUser()
     const cartProducts = await getCartProductsByUserId(currentUser?.id!)
-
-    let totalAmount = 0
-
-    for (const cartProduct of cartProducts!) {
-        const product = await getProductById(cartProduct?.productId!.toString());
-        totalAmount += product?.price! * cartProduct.quantity;
-    }
+    const totalAmount = await calculateCartTotal(currentUser?.id!)
 
     let order: Order | null
     const orderHandler = async () => {

@@ -6,7 +6,7 @@ import {useEffect, useState, useTransition} from "react";
 import {Separator} from "@/components/ui/separator";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
-import {createProduct} from "@/lib/services/product-service";
+import {createProduct, createProductTransaction} from "@/lib/services/product-service";
 import toast from "react-hot-toast";
 import {
     Select,
@@ -66,7 +66,7 @@ export default function AddProductForm() {
                 return
             }
 
-            createProduct(
+            createProductTransaction(
                 title,
                 price,
                 category,
