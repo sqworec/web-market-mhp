@@ -68,14 +68,23 @@ export const Navbar = () => {
                 <NavigationMenu>
                     <NavigationMenuList>
                         <NavigationMenuItem>
+                            <Link href={"/"} legacyBehavior passHref>
+                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    Главная
+                                </NavigationMenuLink>
+                            </Link>
                             <Link href={"/products"}>
-                                <NavigationMenuTrigger>Продукция</NavigationMenuTrigger>
+                                <NavigationMenuTrigger
+                                    className="ml-1"
+                                >
+                                    Продукция
+                                </NavigationMenuTrigger>
                             </Link>
                             <NavigationMenuContent>
                                 <div className="flex flex-row justify-between w-[94.5%] mt-4 ml-4">
                                     <Input
                                         className="w-[90%]"
-                                        placeholder="Название продукции..."
+                                        placeholder="Поиск"
                                         value={searchInput}
                                         onChange={(e) => {
                                             setSearchInput(e.target.value)
@@ -121,11 +130,11 @@ export const Navbar = () => {
                                 </ul>
                             </NavigationMenuContent>
                         </NavigationMenuItem> <NavigationMenuItem>
-                        <Link href={"/contacts"} legacyBehavior passHref>
-                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                Контакты
-                            </NavigationMenuLink>
-                        </Link>
+                        {/*<Link href={"/contacts"} legacyBehavior passHref>*/}
+                        {/*    <NavigationMenuLink className={navigationMenuTriggerStyle()}>*/}
+                        {/*        Контакты*/}
+                        {/*    </NavigationMenuLink>*/}
+                        {/*</Link>*/}
                         <Link href={"/about"} legacyBehavior passHref>
                             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                                 О нас

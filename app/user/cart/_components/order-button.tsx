@@ -7,6 +7,7 @@ import {useCurrentUser} from "@/hooks/use-current-user";
 import {useRouter} from "next/navigation";
 import {getProductsFromCartByUserId} from "@/lib/services/product-service";
 import {clearCart, getCartProductByProductId} from "@/lib/services/cart-service";
+import toast from "react-hot-toast";
 
 interface OrderButtonProps {
     totalAmount: string
@@ -18,6 +19,12 @@ export default function OrderButton({totalAmount}: OrderButtonProps) {
     const router = useRouter()
 
     const orderHandler = async () => {
+        if(user?.payerAndAddress === undefined || user?.organization === undefined || user?.bankAccountNumber === undefined) {
+            router.push("/user/profile")
+            toast.error("Заполните информацию")
+            return
+        }
+
         const order = await createOrder(user?.id!, totalAmount)
         const products = await getProductsFromCartByUserId(user?.id!)
 

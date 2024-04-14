@@ -147,12 +147,12 @@ export default function InvoiceTable({order, orderProducts, products}: InvoiceTa
                     </tbody>
                 </table>
             </div>
-            <Button
-                className="mb-20"
-                onClick={handleExport}
-            >
-                Экспорт в Excel
-            </Button>
+            {/*<Button*/}
+            {/*    className="mb-20"*/}
+            {/*    onClick={handleExport}*/}
+            {/*>*/}
+            {/*    Экспорт в Excel*/}
+            {/*</Button>*/}
         </Container>
     )
 }
