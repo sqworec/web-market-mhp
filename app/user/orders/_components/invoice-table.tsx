@@ -141,9 +141,9 @@ export default function InvoiceTable({order, orderProducts, products}: InvoiceTa
                     <tr>
                         <td colSpan={8} className="py-2">Общая сумма: {(totalAmount + totalVatAmount).toFixed(2)}</td>
                     </tr>
-                    <tr>
-                        <td colSpan={8} className="pt-10">Ответственный: ____________________________</td>
-                    </tr>
+                    {/*<tr>*/}
+                    {/*    <td colSpan={8} className="pt-10">Ответственный: ____________________________</td>*/}
+                    {/*</tr>*/}
                     </tbody>
                 </table>
             </div>
