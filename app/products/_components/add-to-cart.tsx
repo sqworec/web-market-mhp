@@ -6,6 +6,7 @@ import {useEffect, useState, useTransition} from "react";
 import toast from "react-hot-toast";
 import {getCartProductByProductId} from "@/lib/services/cart-service";
 import {Input} from "@/components/ui/input";
+import {useRouter} from "next/navigation";
 
 interface AddToCartButtonProps {
     userId: string,
@@ -13,16 +14,16 @@ interface AddToCartButtonProps {
 }
 
 export const AddToCartForm = ({userId, productId}: AddToCartButtonProps) => {
-    const [quantity, setQuantity] = useState("1")
+    const [quantity, setQuantity] = useState("10")
     const [isPending, startTransition] = useTransition()
-
+    const router = useRouter()
     const cartClickHandle = () => {
         startTransition(() => {
             addProductToCart(userId, parseInt(productId), quantity)
 
             if (quantity === "0") toast.success("Удалено из корзины")
-            else toast.success("Добавлено в карзину")
-
+            else toast.success("Добавлено в корзину")
+            router.refresh()
         })
     }
 
@@ -46,7 +47,7 @@ export const AddToCartForm = ({userId, productId}: AddToCartButtonProps) => {
                     type="number"
                     value={quantity}
                     onChange={(i) => {
-                        if (parseInt(i.target.value) < 0) setQuantity("0")
+                        if (parseInt(i.target.value) < 10) setQuantity("10")
                         else setQuantity(i.target.value)
                     }}
                 />

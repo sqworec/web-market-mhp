@@ -135,11 +135,11 @@ export const Navbar = () => {
                                 О нас
                             </NavigationMenuLink>
                         </Link>
-                        <Link href={"/help"} legacyBehavior passHref>
-                            <NavigationMenuLink className={navigationMenuTriggerStyle() + " ml-1"}>
-                                Справка
-                            </NavigationMenuLink>
-                        </Link>
+                        {/*<Link href={"/help"} legacyBehavior passHref>*/}
+                        {/*    <NavigationMenuLink className={navigationMenuTriggerStyle() + " ml-1"}>*/}
+                        {/*        Справка*/}
+                        {/*    </NavigationMenuLink>*/}
+                        {/*</Link>*/}
                     </NavigationMenuItem>
                     </NavigationMenuList>
                 </NavigationMenu>

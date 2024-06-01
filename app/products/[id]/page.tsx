@@ -8,16 +8,28 @@ import {Separator} from "@/components/ui/separator";
 import UpdateProductButton from "@/app/products/_components/update-product-button";
 import {useRouter} from "next/navigation";
 import NoResults from "@/app/products/_components/no-results";
+import Link from "next/link";
+import {Button} from "@/components/ui/button";
 
 export default async function ProductPage({params}: { params: { id: string } }) {
     const user = await getCurrentUser()
     const product = await getProductById(params.id)
 
-    if(!product) return <NoResults/>
+    if (!product) return <NoResults/>
 
     return (
         <div className="my-20">
             <Container>
+                <div className="mb-10">
+                    <Link
+
+                        href={"/products"}
+                    >
+                        <Button>
+                            Назад
+                        </Button>
+                    </Link>
+                </div>
                 <div className="w-[70%] h-full rounded-xl drop-shadow-md bg-white flex flex-col mx-auto">
                     <div
                         className="flex flex-col"

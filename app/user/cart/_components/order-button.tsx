@@ -41,8 +41,9 @@ export default function OrderButton({totalAmount}: OrderButtonProps) {
         }
 
         await clearCart()
-
-        router.push(`/user/orders/${order?.id}`)
+        toast.success("Заказ успешно оформлен!")
+        router.refresh()
+        //router.push(`/user/orders/${order?.id}`)
     }
 
     return (

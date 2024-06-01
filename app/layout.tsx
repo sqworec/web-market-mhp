@@ -3,6 +3,7 @@ import {Inter} from "next/font/google";
 import "./globals.css";
 import Background from "@/components/background";
 import Navbar from "@/app/(home)/_components/navbar/navbar";
+import Footer from "@/app/(home)/_components/footer/footer";
 import {auth} from "@/auth";
 import {SessionProvider} from "next-auth/react";
 import {Toaster} from "react-hot-toast";
@@ -31,6 +32,7 @@ export default async function RootLayout({
                 <Navbar/>
                 <Toaster position={"top-center"}/>
                 {children}
+                <Footer/>
             </>
             </body>
             </html>

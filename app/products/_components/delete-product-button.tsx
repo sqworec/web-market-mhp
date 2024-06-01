@@ -15,6 +15,7 @@ export default function DeleteProductButton({productId}: DeleteProductButtonProp
         deleteProduct(productId).then(i => {
             toast.success("Продукт удален")
             router.push("/products")
+            router.refresh()
         })
     }
 

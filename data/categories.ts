@@ -1,22 +1,22 @@
 const categories = [
     {
         title: 'Хлеб',
-        description: 'Свежий хлеб',
+        description: 'Мягкий объятие для вкусовых рецепторов',
         searchParam: 'Хлеб',
     },
     {
         title: 'Батон',
-        description: 'Ароматный батон',
+        description: 'Лёгкий завтрак на каждый день',
         searchParam: 'Батон',
     },
     {
         title: 'Сухари',
-        description: 'Сухари как сухари',
+        description: 'Хрустящие кусочки радости',
         searchParam: 'Сухари',
     },
     {
         title: 'Торты',
-        description: 'Наполеон тоже не сразу стал наполеоном',
+        description: 'Сладкий билет в рай',
         searchParam: 'Торты',
     },
 ]

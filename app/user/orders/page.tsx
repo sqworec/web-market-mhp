@@ -30,7 +30,7 @@ export default async function OrdersPage() {
                                 key={order?.id}
                                 className="p-5 mb-5 bg-white w-full rounded-xl drop-shadow-sm hover:drop-shadow-xl transition-all duration-300"
                             >
-                                Заказ от {formatDate(order?.date)} на сумму {order.totalAmount} BYN
+                                Заказ от {formatDate(order?.date)} на сумму {order.totalAmount.toFixed(2)} BYN
                             </div>
 
                         </Link>
