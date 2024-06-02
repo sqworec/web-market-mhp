@@ -164,21 +164,27 @@ export const Navbar = () => {
                             (currentUser) &&
                             <>
                                 <DropdownMenuGroup>
-                                    <Link href={"/user/profile"}>
-                                        <DropdownMenuItem>
-                                            Профиль
-                                        </DropdownMenuItem>
-                                    </Link>
-                                    <Link href={"/user/favorites"}>
-                                        <DropdownMenuItem>
-                                            Избранное
-                                        </DropdownMenuItem>
-                                    </Link>
-                                    <Link href={"/user/cart"}>
-                                        <DropdownMenuItem>
-                                            Корзина
-                                        </DropdownMenuItem>
-                                    </Link>
+                                    {
+                                        (currentUser?.role === "USER") &&
+                                        <>
+                                            <Link href={"/user/profile"}>
+                                                <DropdownMenuItem>
+                                                    Профиль
+                                                </DropdownMenuItem>
+                                            </Link>
+                                            <Link href={"/user/favorites"}>
+                                                <DropdownMenuItem>
+                                                    Избранное
+                                                </DropdownMenuItem>
+                                            </Link>
+                                            <Link href={"/user/cart"}>
+                                                <DropdownMenuItem>
+                                                    Корзина
+                                                </DropdownMenuItem>
+                                            </Link>
+                                        </>
+
+                                    }
                                     <Link href={"/user/orders"}>
                                         <DropdownMenuItem>
                                             Заказы

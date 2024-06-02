@@ -10,6 +10,7 @@ import {useRouter} from "next/navigation";
 import NoResults from "@/app/products/_components/no-results";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
+import BackButton from "@/app/products/_components/back-button";
 
 export default async function ProductPage({params}: { params: { id: string } }) {
     const user = await getCurrentUser()
@@ -21,14 +22,7 @@ export default async function ProductPage({params}: { params: { id: string } }) 
         <div className="my-20">
             <Container>
                 <div className="mb-10">
-                    <Link
-
-                        href={"/products"}
-                    >
-                        <Button>
-                            Назад
-                        </Button>
-                    </Link>
+                    <BackButton/>
                 </div>
                 <div className="w-[70%] h-full rounded-xl drop-shadow-md bg-white flex flex-col mx-auto">
                     <div
@@ -92,15 +86,20 @@ export default async function ProductPage({params}: { params: { id: string } }) 
                         </div>
                     </div>
                     <div className="px-[2vw] mb-[5vh] mt-[2vh]">
-                        <AddToCartForm
-                            userId={user?.id!}
-                            productId={params?.id}
-                        />
-                        <AddToFavoritesButton
-                            userId={user?.id!}
-                            productId={params?.id}
-                        />
+                        {
+                            (user?.role === "USER") &&
+                            <>
 
+                                <AddToCartForm
+                                    userId={user?.id!}
+                                    productId={params?.id}
+                                />
+                                <AddToFavoritesButton
+                                    userId={user?.id!}
+                                    productId={params?.id}
+                                />
+                            </>
+                        }
                         {
                             (user?.role === "ADMIN") &&
                             <>

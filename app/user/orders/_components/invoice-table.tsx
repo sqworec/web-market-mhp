@@ -5,6 +5,10 @@ import {useCurrentUser} from "@/hooks/use-current-user";
 import Container from "@/app/container";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
+import {deleteOrderById} from "@/lib/services/order-service";
+import {useRouter} from "next/navigation";
+import toast from "react-hot-toast";
+import BackButton from "@/app/products/_components/back-button";
 
 interface InvoiceTableProps {
     order: Order,
@@ -14,6 +18,7 @@ interface InvoiceTableProps {
 
 export default function InvoiceTable({order, orderProducts, products}: InvoiceTableProps) {
     const user = useCurrentUser()
+    const router = useRouter()
 
     const calculateTotal = () => {
         let totalQuantity = 0;
@@ -44,21 +49,32 @@ export default function InvoiceTable({order, orderProducts, products}: InvoiceTa
         return `${day}.${month}.${year} г`;
     }
 
+    const handleDeleteOrder = () => {
+        deleteOrderById(order?.id!.toString()).then(() => {
+            toast.success("Заказ удален!")
+            router.push("/user/orders")
+            router.refresh()
+        })
+    }
+
     const handleExport = () => {
 
     }
 
     return (
         <Container>
-            <div className="mt-20">
-                <Link
-
-                    href={"/user/orders"}
-                >
-                    <Button>
-                        Назад
+            <div className="mt-20 flex flex-row">
+                <BackButton/>
+                {
+                    (user?.role === "ADMIN") &&
+                    <Button
+                        className="bg-red-500 ml-5 hover:bg-red-700"
+                        onClick={() => handleDeleteOrder()}
+                    >
+                        Удалить
                     </Button>
-                </Link>
+                }
+
             </div>
             <div className="mt-10 w-full h-full p-10 mb-5 bg-white rounded-xl drop-shadow-lg">
                 <table className="w-full border-collapse bg-white">
@@ -120,27 +136,27 @@ export default function InvoiceTable({order, orderProducts, products}: InvoiceTa
                         <th colSpan={2} className="py-5 border border-neutral-500">Сумма с НДС</th>
                     </tr>
                     {orderProducts?.map((orderProduct, index) => {
-                        const product = products.find(product => product.id === orderProduct.productId);
-                        if (product) {
-                            const vatAmount = 0//(orderProduct.totalPrice * 0.2).toFixed(2);
-                            const totalPriceWithVat = (orderProduct.totalPrice + vatAmount).toFixed(2);
-                            return (
-                                <tr key={index} className="border border-neutral-500 hover:bg-gray-200">
-                                    <td className="pl-4 pr-2 border-b border-neutral-500">{product.title}</td>
-                                    <td className="text-center pr-2 border border-neutral-500">ШТ</td>
-                                    <td colSpan={2}
-                                        className="text-right pr-2 border border-neutral-500">{orderProduct.quantity}</td>
-                                    <td colSpan={2}
-                                        className="text-right pr-2 border border-neutral-500">{orderProduct.price.toFixed(2)}</td>
-                                    {/*<td className="text-right pr-2 border border-neutral-500">{orderProduct.totalPrice.toFixed(2)}</td>*/}
-                                    {/*<td className="text-right pr-2 border border-neutral-500">20</td>*/}
-                                    {/*<td className="text-right pr-2 border border-neutral-500">{vatAmount}</td>*/}
-                                    <td colSpan={2}
-                                        className="text-right pr-2 border border-neutral-500">{totalPriceWithVat}</td>
-                                </tr>
-                            );
-                        }
-                        return null;
+                        //const product = products.find(product => product.id === orderProduct.productId);
+                        //if (product) {
+                        const vatAmount = 0//(orderProduct.totalPrice * 0.2).toFixed(2);
+                        const totalPriceWithVat = (orderProduct.totalPrice + vatAmount).toFixed(2);
+                        return (
+                            <tr key={index} className="border border-neutral-500 hover:bg-gray-200">
+                                <td className="pl-4 pr-2 border-b border-neutral-500">{orderProduct.name}</td>
+                                <td className="text-center pr-2 border border-neutral-500">ШТ</td>
+                                <td colSpan={2}
+                                    className="text-right pr-2 border border-neutral-500">{orderProduct.quantity}</td>
+                                <td colSpan={2}
+                                    className="text-right pr-2 border border-neutral-500">{orderProduct.price.toFixed(2)}</td>
+                                {/*<td className="text-right pr-2 border border-neutral-500">{orderProduct.totalPrice.toFixed(2)}</td>*/}
+                                {/*<td className="text-right pr-2 border border-neutral-500">20</td>*/}
+                                {/*<td className="text-right pr-2 border border-neutral-500">{vatAmount}</td>*/}
+                                <td colSpan={2}
+                                    className="text-right pr-2 border border-neutral-500">{totalPriceWithVat}</td>
+                            </tr>
+                        );
+                        //}
+                        //return null;
                     })}
                     <tr className="font-bold">
                         <td className="text-right pr-2 border border-neutral-500 rounded-bl-xl" colSpan={1}>Итого:</td>

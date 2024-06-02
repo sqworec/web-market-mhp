@@ -13,7 +13,7 @@ interface ProductListProps {
     products: Product[];
 }
 
-export default function ProductList({products}: ProductListProps) {
+export default function ProductsList({products}: ProductListProps) {
     const searchParams = useSearchParams();
     const categoryParam = searchParams.get("category");
     const titleParam = searchParams.get("title");
@@ -21,22 +21,24 @@ export default function ProductList({products}: ProductListProps) {
 
     let filteredProducts = products;
 
-    if (categoryParam && filteredProducts) {
-        filteredProducts = filteredProducts.filter(product => product.category === categoryParam);
-    }
+    if (filteredProducts !== null) {
+        if (categoryParam && filteredProducts) {
+            filteredProducts = filteredProducts.filter(product => product.category === categoryParam);
+        }
 
-    if (titleParam && filteredProducts) {
-        filteredProducts = filteredProducts.filter(product => product.title.toLowerCase().includes(titleParam.toLowerCase()));
-    }
+        if (titleParam && filteredProducts) {
+            filteredProducts = filteredProducts.filter(product => product.title.toLowerCase().includes(titleParam.toLowerCase()));
+        }
 
-    if (sort === "А-Я") {
-        filteredProducts.sort((a, b) => a.title.localeCompare(b.title, 'ru'));
-    } else if (sort === "Я-А") {
-        filteredProducts.sort((a, b) => b.title.localeCompare(a.title, 'ru'));
-    } else if (sort === "Дорогой") {
-        filteredProducts.sort((a, b) => b.price - a.price);
-    } else if (sort === "Дешевый") {
-        filteredProducts.sort((a, b) => a.price - b.price);
+        if (sort === "А-Я") {
+            filteredProducts.sort((a, b) => a.title.localeCompare(b.title, 'ru'));
+        } else if (sort === "Я-А") {
+            filteredProducts.sort((a, b) => b.title.localeCompare(a.title, 'ru'));
+        } else if (sort === "Дорогой") {
+            filteredProducts.sort((a, b) => b.price - a.price);
+        } else if (sort === "Дешевый") {
+            filteredProducts.sort((a, b) => a.price - b.price);
+        }
     }
 
     return (
@@ -78,7 +80,7 @@ export default function ProductList({products}: ProductListProps) {
                     </SelectContent>
                 </Select>
             </div>
-            {(filteredProducts.length > 0) ? (
+            {(filteredProducts !== null && filteredProducts.length > 0) ? (
                 <div className="
                     mt-8
                     grid

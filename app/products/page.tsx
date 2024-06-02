@@ -3,7 +3,7 @@ import * as React from "react"
 import Container from "@/app/container";
 
 import ProductCard from "@/components/ui/product-card";
-import ProductList from "@/app/products/_components/product-list";
+import ProductsList from "@/app/products/_components/products-list";
 
 const ProductsPage = async () => {
 
@@ -11,7 +11,7 @@ const ProductsPage = async () => {
 
     return (
         <Container>
-            <ProductList
+            <ProductsList
                 products={products!}
             />
         </Container>

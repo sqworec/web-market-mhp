@@ -33,11 +33,9 @@ export default function UserForm() {
     const updateHandler = () => {
         startTransition(() => {
             if (
-                (
-                    organization ||
-                    payerAndAddress ||
-                    bankAccountNumber
-                ) === ""
+                    organization === "" ||
+                    payerAndAddress === "" ||
+                    bankAccountNumber === ""
             ) {
                 toast.error("Заполните поля!")
                 return
@@ -50,7 +48,7 @@ export default function UserForm() {
                 bankAccountNumber
             ).then(() => {
                 toast.success("Профиль изменен")
-                router.refresh()
+                window.location.reload()
             }).catch(() => {
                 toast.error("Что-то пошло не так!")
             })

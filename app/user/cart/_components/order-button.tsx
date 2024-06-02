@@ -32,6 +32,7 @@ export default function OrderButton({totalAmount}: OrderButtonProps) {
             const prod = await getCartProductByProductId(product?.id.toString(), user?.id!)
 
             await createOrderItem(
+                product?.title!.toString()!,
                 order?.id!.toString()!,
                 product?.id!.toString()!,
                 prod?.quantity.toString()!,

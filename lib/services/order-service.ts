@@ -42,10 +42,11 @@ export const getOrderById = async (id: string) => {
     }
 }
 
-export const createOrderItem = async (orderId: string, productId: string, quantity: string, price: string, totalPrice: string) => {
+export const createOrderItem = async (name: string, orderId: string, productId: string, quantity: string, price: string, totalPrice: string) => {
     try {
         await db.orderItem.create({
             data: {
+                name,
                 orderId: parseInt(orderId, 10),
                 productId: parseInt(productId, 10),
                 quantity: parseInt(quantity, 10),
@@ -70,47 +71,73 @@ export const getOrderItemsByOrderId = async (orderId: string) => {
     }
 }
 
-export const createOrderWithItems = async (
-    userId: string,
-    totalAmount: string,
-    items: {
-        productId: string;
-        quantity: string;
-        price: string;
-    }[]
-) => {
-    let createdOrder: Order;
-    let createdItems;
-
+export const deleteOrderItemsByOrderId = async (orderId: string) => {
     try {
-        await db.$transaction(async (tx) => {
-            createdOrder = await tx.order.create({
-                data: {
-                    userId,
-                    totalAmount: parseFloat(totalAmount),
-                    date: new Date(),
-                },
-            });
-
-            createdItems = await Promise.all(
-                items.map(async (item) => {
-                    const totalPrice = parseInt(item.quantity, 10) * parseFloat(item.price);
-                    return tx.orderItem.create({
-                        data: {
-                            orderId: createdOrder.id,
-                            productId: parseInt(item.productId, 10),
-                            quantity: parseInt(item.quantity, 10),
-                            price: parseFloat(item.price),
-                            totalPrice,
-                        },
-                    });
-                })
-            );
-            return createdOrder
+        return await db.orderItem.deleteMany({
+            where: {
+                orderId: parseInt(orderId, 10)
+            }
         });
     } catch (error) {
-        console.error('Error creating order with items: ', error);
+        console.error('Error deleting order items:', error);
         throw error;
     }
+}
 
-};
+export const deleteOrderById = async (orderId: string) => {
+    try {
+        await deleteOrderItemsByOrderId(orderId)
+        return await db.order.delete({
+            where: {
+                id: parseInt(orderId, 10)
+            }
+        })
+    } catch (error) {
+        console.error("Error deleting order: ", error)
+    }
+}
+
+// export const createOrderWithItems = async (
+//     userId: string,
+//     totalAmount: string,
+//     items: {
+//         productId: string;
+//         quantity: string;
+//         price: string;
+//     }[]
+// ) => {
+//     let createdOrder: Order;
+//     let createdItems;
+//
+//     try {
+//         await db.$transaction(async (tx) => {
+//             createdOrder = await tx.order.create({
+//                 data: {
+//                     userId,
+//                     totalAmount: parseFloat(totalAmount),
+//                     date: new Date(),
+//                 },
+//             });
+//
+//             createdItems = await Promise.all(
+//                 items.map(async (item) => {
+//                     const totalPrice = parseInt(item.quantity, 10) * parseFloat(item.price);
+//                     return tx.orderItem.create({
+//                         data: {
+//                             orderId: createdOrder.id,
+//                             productId: parseInt(item.productId, 10),
+//                             quantity: parseInt(item.quantity, 10),
+//                             price: parseFloat(item.price),
+//                             totalPrice,
+//                         },
+//                     });
+//                 })
+//             );
+//             return createdOrder
+//         });
+//     } catch (error) {
+//         console.error('Error creating order with items: ', error);
+//         throw error;
+//     }
+//
+// };
