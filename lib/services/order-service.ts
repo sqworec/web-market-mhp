@@ -18,6 +18,14 @@ export const createOrder = async (userId: string, totalAmount: string) => {
     }
 }
 
+export const getAllOrders = async () => {
+    try {
+        return await db.order.findMany()
+    } catch (error) {
+        console.error("Error getting all orders: ", error)
+    }
+}
+
 export const getOrdersByUserId = async (userId: string) => {
     try {
         return await db.order.findMany({

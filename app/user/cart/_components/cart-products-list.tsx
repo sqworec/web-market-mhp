@@ -30,7 +30,7 @@ export default function CartProductsList({cartProducts, totalAmount, currentUser
 
                 {
                     (cartProducts?.length! > 0) &&
-                    <div className="flex flex-row justify-between items-center right-full h-full px-10">
+                    <div className="flex flex-row justify-between items-center right-full h-full px-10 mb-20">
                         <div className="text-lg h-full">
                             Итоговая сумма: {totalAmount.toFixed(2)} BYN
                         </div>

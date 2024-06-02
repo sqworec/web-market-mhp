@@ -22,7 +22,11 @@ export default async function ProductPage({params}: { params: { id: string } }) 
         <div className="my-20">
             <Container>
                 <div className="mb-10">
-                    <BackButton/>
+                    <Link href={"/products"}>
+                        <Button>
+                            Назад
+                        </Button>
+                    </Link>
                 </div>
                 <div className="w-[70%] h-full rounded-xl drop-shadow-md bg-white flex flex-col mx-auto">
                     <div
